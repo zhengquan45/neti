@@ -10,6 +10,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * @author zhengquan
+ */
 @TableName("t_brand")
 @Data
 @Builder

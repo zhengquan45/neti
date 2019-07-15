@@ -58,33 +58,39 @@ public class ServerResponse<T> implements Serializable{
         return msg;
     }
 
-    //请求成功的信息
+    /**
+     * 请求成功的信息
+     */
     public static <T> ServerResponse<T> createBySuccess(){
-        return new ServerResponse<T>(ResponseCode.SUCCESS.getCode());
+        return new ServerResponse<>(ResponseCode.SUCCESS.getCode());
     }
 
     public static <T> ServerResponse<T> createBySuccessMessage(String msg){
-        return new ServerResponse<T>(ResponseCode.SUCCESS.getCode(),msg);
+        return new ServerResponse<>(ResponseCode.SUCCESS.getCode(), msg);
     }
 
     public static <T> ServerResponse<T> createBySuccess(T data){
-        return new ServerResponse<T>(ResponseCode.SUCCESS.getCode(),data);
+        return new ServerResponse<>(ResponseCode.SUCCESS.getCode(), data);
     }
 
     public static <T> ServerResponse<T> createBySuccess(String msg,T data){
-        return new ServerResponse<T>(ResponseCode.SUCCESS.getCode(),msg,data);
+        return new ServerResponse<>(ResponseCode.SUCCESS.getCode(), msg, data);
     }
 
-    //请求失败的信息
+    /**
+     * 请求失败的信息
+     * @param <T>
+     * @return
+     */
     public static <T> ServerResponse<T> createByError(){
-        return new ServerResponse<T>(ResponseCode.ERROR.getCode());
+        return new ServerResponse<>(ResponseCode.ERROR.getCode());
     }
 
     public static <T> ServerResponse<T> createByErrorMessage(String errorMsg){
-        return new ServerResponse<T>(ResponseCode.ERROR.getCode(),errorMsg);
+        return new ServerResponse<>(ResponseCode.ERROR.getCode(), errorMsg);
     }
 
     public static <T> ServerResponse<T> createByErrorCodeMessage(int errorCode,String errorMsg){
-        return new ServerResponse<T>(errorCode,errorMsg);
+        return new ServerResponse<>(errorCode, errorMsg);
     }
 }

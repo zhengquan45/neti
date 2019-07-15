@@ -1,6 +1,5 @@
 package com.zhq.neti.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhq.neti.common.ServerResponse;
 import com.zhq.neti.service.UserService;
 import com.zhq.neti.vo.PageQuery;
@@ -15,7 +14,7 @@ import java.util.List;
  * @date 2019/7/14
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/manage/user")
 public class UserController {
 
     @Autowired
@@ -48,6 +47,6 @@ public class UserController {
     @GetMapping("/list")
     @ResponseBody
     public ServerResponse findlistByCondition(String username,Integer status,PageQuery pageQuery){
-        return userService.findlistByCondition(username,status,pageQuery);
+        return userService.findListByCondition(username,status,pageQuery);
     }
 }

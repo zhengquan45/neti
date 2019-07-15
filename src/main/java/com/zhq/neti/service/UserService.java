@@ -32,9 +32,9 @@ public class UserService {
     public ServerResponse save(UserVO userVO){
         BeanValidator.check(userVO);
         User user = userVO.adapt();
-        ServerResponse vaildResponse = checkValid(user.getUsername());
-        if(!vaildResponse.isSuccess()){
-            return vaildResponse;
+        ServerResponse response = checkValid(user.getUsername());
+        if(!response.isSuccess()){
+            return response;
         }
         user.setPassword(SecureUtil.md5(user.getPassword()));
         if(userMapper.insert(user) > 0){
@@ -77,7 +77,7 @@ public class UserService {
        return ServerResponse.createByErrorMessage("未找到该用户");
     }
 
-    public ServerResponse findlistByCondition(String username, Integer status, PageQuery pageQuery) {
+    public ServerResponse findListByCondition(String username, Integer status, PageQuery pageQuery) {
         Wrapper<User> wrapper = Wrappers.<User>lambdaQuery().like(StrUtil.isNotEmpty(username),User::getUsername, username).eq(status!=null,User::getStatus, status);
         IPage<User> page = userMapper.selectPage(pageQuery.adapt(), wrapper);
         return ServerResponse.createBySuccess(page);
