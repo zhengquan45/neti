@@ -16,6 +16,7 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 public class UserVO {
+    private Long id;
     @NotBlank(message = "用户名不可以为空")
     @Length(min=1,max = 40,message = "用户名长度需要在1-40个字之内")
     private String username;
@@ -32,7 +33,6 @@ public class UserVO {
     public User adapt(){
         User user = new User();
         BeanUtil.copyProperties(this,user);
-        user.setPassword(SecureUtil.md5(this.password));
         return user;
     }
 }
