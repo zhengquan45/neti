@@ -1,4 +1,4 @@
-package com.zhq.neti.controller;
+package com.zhq.neti.controller.manage;
 
 import com.zhq.neti.common.ServerResponse;
 import com.zhq.neti.service.UserService;

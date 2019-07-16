@@ -1,12 +1,16 @@
 package com.zhq.neti.service;
 
 import cn.hutool.core.collection.CollUtil;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.zhq.neti.common.BeanValidator;
 import com.zhq.neti.common.ServerResponse;
 import com.zhq.neti.mapper.BrandMapper;
 import com.zhq.neti.pojo.Brand;
 import com.zhq.neti.vo.BrandVO;
+import com.zhq.neti.vo.PageQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,14 +40,6 @@ public class BrandService {
         return ServerResponse.createByError();
     }
 
-    private ServerResponse checkValid(String name) {
-        int resultCount = brandMapper.selectCount(Wrappers.<Brand>lambdaQuery().eq(Brand::getName, name));
-        if (resultCount > 0) {
-            return ServerResponse.createByErrorMessage("品牌名称已被占用");
-        }
-        return ServerResponse.createBySuccess();
-    }
-
     public ServerResponse delete(List<Long> ids) {
         if(CollUtil.isEmpty(ids)){
             return ServerResponse.createByErrorMessage("请选择移除的品牌");
@@ -52,5 +48,42 @@ public class BrandService {
             return ServerResponse.createBySuccess();
         }
         return ServerResponse.createByError();
+    }
+
+    public ServerResponse update(BrandVO brandVO) {
+        if(brandVO.getId()==null){
+            return ServerResponse.createByErrorMessage("请选择要修改的品牌");
+        }
+        Brand brand = brandVO.adapt();
+        ServerResponse serverResponse = checkValid(brand.getName());
+        if(!serverResponse.isSuccess()){
+            return serverResponse;
+        }
+        if(brandMapper.updateById(brand)>0){
+            return ServerResponse.createBySuccess();
+        }
+        return ServerResponse.createByError();
+    }
+
+    public ServerResponse find(Long id) {
+        Brand brand = brandMapper.selectById(id);
+        if(brand!=null){
+            return ServerResponse.createBySuccess(brand);
+        }
+        return ServerResponse.createByErrorMessage("未找到该品牌");
+    }
+
+    public ServerResponse findListByCondition(String name, Character letter, PageQuery pageQuery) {
+        Wrapper<Brand> wrapper = Wrappers.<Brand>lambdaQuery().like(Brand::getName, name).eq(Brand::getLetter, letter);
+        IPage<Brand> page = brandMapper.selectPage(pageQuery.adapt(), wrapper);
+        return ServerResponse.createBySuccess(page);
+    }
+
+    private ServerResponse checkValid(String name) {
+        int resultCount = brandMapper.selectCount(Wrappers.<Brand>lambdaQuery().eq(Brand::getName, name));
+        if (resultCount > 0) {
+            return ServerResponse.createByErrorMessage("品牌名称已被占用");
+        }
+        return ServerResponse.createBySuccess();
     }
 }

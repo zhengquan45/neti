@@ -5,7 +5,6 @@ package com.zhq.neti.exception;
  * @date 2017/10/27
  */
 public class ParamException extends RuntimeException {
-
     public ParamException() {
         super();
     }

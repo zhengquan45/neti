@@ -1,8 +1,9 @@
-package com.zhq.neti.controller;
+package com.zhq.neti.controller.manage;
 
 import com.zhq.neti.common.ServerResponse;
 import com.zhq.neti.service.BrandService;
 import com.zhq.neti.vo.BrandVO;
+import com.zhq.neti.vo.PageQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,6 @@ public class BrandController {
     @Autowired
     private BrandService brandService;
 
-
     @PostMapping
     @ResponseBody
     public ServerResponse save(BrandVO brandVO){
@@ -30,5 +30,23 @@ public class BrandController {
     @ResponseBody
     public ServerResponse delete(@RequestParam("ids") List<Long> ids){
         return brandService.delete(ids);
+    }
+
+    @PutMapping
+    @ResponseBody
+    public ServerResponse update(BrandVO brandVO){
+        return  brandService.update(brandVO);
+    }
+
+    @GetMapping
+    @ResponseBody
+    public ServerResponse find(@RequestParam Long id){
+        return brandService.find(id);
+    }
+
+    @GetMapping("/list")
+    @ResponseBody
+    public ServerResponse findlistByCondition(String name, Character letter, PageQuery pageQuery){
+        return brandService.findListByCondition(name,letter,pageQuery);
     }
 }
