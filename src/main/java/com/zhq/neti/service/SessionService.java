@@ -1,5 +1,6 @@
 package com.zhq.neti.service;
 
+import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.zhq.neti.common.ServerResponse;
 import com.zhq.neti.mapper.UserMapper;
@@ -18,7 +19,7 @@ public class SessionService {
 
     public ServerResponse<User> login(String username, String password) {
 
-        User user = userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getUsername, username).eq(User::getPassword, password));
+        User user = userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getUsername, username).eq(User::getPassword, SecureUtil.md5(password)));
         if(user!=null){
             user.setPassword(null);
             return ServerResponse.createBySuccess(user);
