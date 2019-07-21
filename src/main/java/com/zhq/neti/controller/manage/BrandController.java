@@ -21,32 +21,27 @@ public class BrandController {
     private BrandService brandService;
 
     @PostMapping
-    @ResponseBody
     public ServerResponse save(BrandVO brandVO){
         return brandService.save(brandVO);
     }
 
     @DeleteMapping
-    @ResponseBody
     public ServerResponse delete(@RequestParam("ids") List<Long> ids){
         return brandService.delete(ids);
     }
 
     @PutMapping
-    @ResponseBody
     public ServerResponse update(BrandVO brandVO){
         return  brandService.update(brandVO);
     }
 
     @GetMapping
-    @ResponseBody
     public ServerResponse find(@RequestParam Long id){
         return brandService.find(id);
     }
 
     @GetMapping("/list")
-    @ResponseBody
-    public ServerResponse findlistByCondition(String name, Character letter, PageQuery pageQuery){
+    public ServerResponse findListByCondition(String name, Character letter, PageQuery pageQuery){
         return brandService.findListByCondition(name,letter,pageQuery);
     }
 }

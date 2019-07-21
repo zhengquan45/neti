@@ -21,31 +21,26 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    @ResponseBody
     public ServerResponse save(UserVO userVO) {
         return userService.save(userVO);
     }
 
     @DeleteMapping
-    @ResponseBody
     public ServerResponse delete(@RequestParam("ids") List<Long> ids){
         return userService.delete(ids);
     }
 
     @PutMapping
-    @ResponseBody
     public ServerResponse update(UserVO userVO){
         return userService.update(userVO);
     }
 
     @GetMapping
-    @ResponseBody
     public ServerResponse find(@RequestParam Long id){
         return userService.find(id);
     }
 
     @GetMapping("/list")
-    @ResponseBody
     public ServerResponse findlistByCondition(String username,Integer status,PageQuery pageQuery){
         return userService.findListByCondition(username,status,pageQuery);
     }

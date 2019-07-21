@@ -20,7 +20,6 @@ public class SessionController {
     private SessionService sessionService;
 
     @GetMapping
-    @ResponseBody
     public ServerResponse login(@RequestParam String username, @RequestParam String password, HttpSession session){
         ServerResponse<User> response = sessionService.login(username, password);
         if(response.isSuccess()){
@@ -30,7 +29,6 @@ public class SessionController {
     }
 
     @DeleteMapping
-    @ResponseBody
     public ServerResponse logout(HttpSession session){
         session.removeAttribute(Const.CURRENT_USER);
         return ServerResponse.createBySuccess();
