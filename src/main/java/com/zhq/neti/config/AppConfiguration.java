@@ -8,6 +8,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+/**
+ * @author zhengquan
+ */
 @Configuration
 public class AppConfiguration extends WebMvcConfigurerAdapter {
 
@@ -15,14 +18,15 @@ public class AppConfiguration extends WebMvcConfigurerAdapter {
     public FilterRegistrationBean sessionExpireFilter() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(new SessionExpireFilter());
-        registration.addUrlPatterns("/manage/*");
+        registration.addUrlPatterns("/manage/**");
         registration.setOrder(1);
         return registration;
     }
 
+    @Override
     public void addInterceptors(InterceptorRegistry registry){
         registry.addInterceptor(new SessionIntercepter())
-                .addPathPatterns("/manage/*")
+                .addPathPatterns("/manage/**")
                 .excludePathPatterns("/manage/session");
     }
 }

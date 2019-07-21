@@ -1,6 +1,5 @@
 package com.zhq.neti.intercepter;
 
-import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.zhq.neti.common.Const;
@@ -18,12 +17,14 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
 
+/**
+ * @author zhengquan
+ */
 @Slf4j
 public class SessionIntercepter implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object handler) throws Exception {
-        log.info("preHandle");
         /**
          * 请求中controller的方法名
          */
@@ -54,8 +55,8 @@ public class SessionIntercepter implements HandlerInterceptor {
             requestParamBuffer.append(mapKey).append("=").append(mapValue);
         }
 
-
-        log.info("权限拦截器拦截的请求，className:{},methodName:{},param:{}", className, methodName, requestParamBuffer.toString());
+        String param = requestParamBuffer.toString();
+        log.info("权限拦截器拦截的请求，className:{},methodName:{},param:{}", className, methodName, StrUtil.isEmpty(param)?"无参数":param);
 
         User user = (User) httpServletRequest.getSession().getAttribute(Const.CURRENT_USER);
         if (user == null) {
@@ -72,23 +73,7 @@ public class SessionIntercepter implements HandlerInterceptor {
              * 上传富文本的控件有接口要求,要特殊处理,这里需要判断是否登录以及是否有权限
              */
             PrintWriter out = httpServletResponse.getWriter();
-            if (user == null) {
-                if (StrUtil.equals(className, "ProductManageController") && StrUtil.equals(methodName, "richTextImgUpload")) {
-                    Map resultMap = MapUtil.newHashMap();
-                    resultMap.put("success", false);
-                    resultMap.put("msg", "请登陆管理员");
-                    out.print(JSONUtil.toJsonStr(resultMap));
-                }
-                out.print(JSONUtil.toJsonStr(ServerResponse.createByErrorMessage("拦截器拦截,用户未登录")));
-            } else {
-                if (StrUtil.equals(className, "ProductManageController") && StrUtil.equals(methodName, "richTextImgUpload")) {
-                    Map resultMap = MapUtil.newHashMap();
-                    resultMap.put("success", false);
-                    resultMap.put("msg", "用户无权限");
-                    out.print(JSONUtil.toJsonStr(resultMap));
-                }
-                out.print(JSONUtil.toJsonStr(ServerResponse.createByErrorMessage("拦截器拦截,用户无权限")));
-            }
+            out.print(JSONUtil.toJsonStr(ServerResponse.createByErrorMessage("拦截器拦截,用户未登录")));
             out.flush();
             out.close();
             return false;
@@ -98,11 +83,9 @@ public class SessionIntercepter implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object handler, ModelAndView modelAndView) throws Exception {
-        log.info("postHandle");
     }
 
     @Override
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object handler, Exception e) throws Exception {
-        log.info("afterCompletion");
     }
 }

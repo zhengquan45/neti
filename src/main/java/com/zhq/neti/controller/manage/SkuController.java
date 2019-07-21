@@ -14,6 +14,7 @@ import java.util.List;
  * @date 2019/7/21
  */
 @RestController
+@RequestMapping("/manage/sku")
 public class SkuController {
 
     @Autowired

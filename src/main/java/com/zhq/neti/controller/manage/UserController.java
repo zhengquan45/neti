@@ -41,7 +41,7 @@ public class UserController {
     }
 
     @GetMapping("/list")
-    public ServerResponse findlistByCondition(String username,Integer status,PageQuery pageQuery){
+    public ServerResponse findListByCondition(String username,Integer status,PageQuery pageQuery){
         return userService.findListByCondition(username,status,pageQuery);
     }
 }

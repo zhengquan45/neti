@@ -8,12 +8,17 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+/**
+ * @author zhengquan
+ */
 public class SessionExpireFilter implements Filter {
 
+    @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
     }
 
+    @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         User user = (User)req.getSession().getAttribute(Const.CURRENT_USER);
@@ -25,6 +30,7 @@ public class SessionExpireFilter implements Filter {
         return;
     }
 
+    @Override
     public void destroy() {
 
     }
