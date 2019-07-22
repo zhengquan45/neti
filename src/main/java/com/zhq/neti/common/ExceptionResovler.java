@@ -1,39 +1,29 @@
 package com.zhq.neti.common;
 
-import com.zhq.neti.exception.NoSessionException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerExceptionResolver;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 
 @Slf4j
-@RestControllerAdvice
-public class ExceptionResovler {
+@Component
+public class ExceptionResovler implements HandlerExceptionResolver {
 
-    /**
-     * 处理所有业务异常
-     *
-     * @param e 业务异常
-     * @return json结果
-     */
-    @ExceptionHandler(NoSessionException.class)
-    public ServerResponse handleOpdRuntimeException(NoSessionException e) {
-        // 不打印异常堆栈信息
-        log.error(e.getMessage());
-        return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),e.getMessage());
+    @Override
+    public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) {
+        log.error("{}-exception:", httpServletRequest.getRequestURI(), e);
+        ModelAndView modelAndView = new ModelAndView(new MappingJackson2JsonView());
+        modelAndView.addObject("status", ResponseCode.ERROR.getCode());
+        modelAndView.addObject("msg", "接口异常,详情请查询服务器端日志信息");
+        modelAndView.addObject("data",e.toString());
+        return modelAndView;
     }
 
-    /**
-     * 处理所有不可知异常
-     *
-     * @param e 异常
-     * @return json结果
-     */
-    @ExceptionHandler(Exception.class)
-    public ServerResponse handleException(Exception e) {
-        // 打印异常堆栈信息
-        log.error(e.getMessage(), e);
-        return ServerResponse.createByErrorMessage("系统错误");
-    }
 
 
 }
