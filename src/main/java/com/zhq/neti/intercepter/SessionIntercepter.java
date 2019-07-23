@@ -1,5 +1,6 @@
 package com.zhq.neti.intercepter;
 
+import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.zhq.neti.common.Const;
@@ -17,9 +18,6 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
 
-/**
- * @author zhengquan
- */
 @Slf4j
 public class SessionIntercepter implements HandlerInterceptor {
 
@@ -83,9 +81,11 @@ public class SessionIntercepter implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object handler, ModelAndView modelAndView) throws Exception {
+        log.info("postHandle");
     }
 
     @Override
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object handler, Exception e) throws Exception {
+        log.info("afterCompletion");
     }
 }
