@@ -9,22 +9,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 
-/**
- * @author zhengquan
- * @date 2019/7/24
- */
-@TableName("t_level")
+@TableName("t_job")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Level {
+public class Job {
+
     @TableId(type = IdType.ID_WORKER)
     private Long id;
-    private String level;
-    private BigDecimal discount;
+    private String name;
     @TableLogic
     private Boolean isDeleted;
 }

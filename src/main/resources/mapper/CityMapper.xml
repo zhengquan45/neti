@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhq.neti.mapper.CityMapper">
+    <resultMap id="BaseResultMap" type="com.zhq.neti.pojo.City">
+        <id column="id" property="id"></id>
+        <result column="pid" property="pid"></result>
+        <result column="name" property="name"></result>
+        <result column="type" property="type"></result>
+        <collection property="list" javaType="java.util.ArrayList"  ofType="com.zhq.neti.pojo.City">
+            <id column="rid" property="id"></id>
+            <result column="rpid" property="pid"></result>
+            <result column="rname" property="name"></result>
+            <result column="rtype" property="type"></result>
+        </collection>
+    </resultMap>
+    <select id="findAllCity" resultMap="BaseResultMap">
+        select
+        c1.id,
+        c1.pid,
+        c1.name,
+        c1.type,
+        c2.id rid,
+        c2.pid rpid,
+        c2.name rname,
+        c2.type rtype
+        from t_city c1 left join t_city c2 on c1.id = c2.pid
+        where c1.pid =  1
+    </select>
+</mapper>

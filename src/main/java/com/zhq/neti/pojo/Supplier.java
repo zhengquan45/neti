@@ -1,30 +1,33 @@
 package com.zhq.neti.pojo;
 
+
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.zhq.neti.common.enums.SupplierTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
-/**
- * @author zhengquan
- * @date 2019/7/24
- */
-@TableName("t_level")
+@TableName("t_supplier")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Level {
+public class Supplier {
     @TableId(type = IdType.ID_WORKER)
     private Long id;
-    private String level;
-    private BigDecimal discount;
+    private String code;
+    private String name;
+    private SupplierTypeEnum type;
+    private String linkMan;
+    private String tel;
+    private String address;
+    private String bankName;
+    private String backAccount;
+    private Integer status;
     @TableLogic
     private Boolean isDeleted;
 }

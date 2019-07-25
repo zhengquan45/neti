@@ -10,21 +10,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
-/**
- * @author zhengquan
- * @date 2019/7/24
- */
-@TableName("t_level")
+@TableName("t_order_detail")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Level {
-    @TableId(type = IdType.ID_WORKER)
-    private Long id;
-    private String level;
-    private BigDecimal discount;
+public class OrderDetail {
+    private Long orderId;
+    private Long skuId;
+    private BigDecimal price;
+    private BigDecimal actualPrice;
+    private Integer num;
     @TableLogic
     private Boolean isDeleted;
 }
