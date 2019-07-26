@@ -2,6 +2,7 @@ package com.zhq.neti.vo;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.crypto.SecureUtil;
+import com.zhq.neti.common.valid.anno.UserUnique;
 import com.zhq.neti.pojo.User;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
@@ -19,6 +20,7 @@ public class UserVO {
     private Long id;
     @NotBlank(message = "用户名不可以为空")
     @Length(min=1,max = 40,message = "用户名长度需要在1-40个字之内")
+    @UserUnique
     private String username;
     @NotBlank(message = "密码不能为空")
     private String password;

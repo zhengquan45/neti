@@ -1,7 +1,6 @@
 package com.zhq.neti.service;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
@@ -9,14 +8,15 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.zhq.neti.common.BeanValidator;
 import com.zhq.neti.common.ServerResponse;
+import com.zhq.neti.common.valid.IValid;
 import com.zhq.neti.mapper.UserMapper;
 import com.zhq.neti.pojo.User;
 import com.zhq.neti.vo.PageQuery;
 import com.zhq.neti.vo.UserVO;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 /**
@@ -24,7 +24,7 @@ import java.util.List;
  * @date 2019/7/14
  */
 @Service
-public class UserService {
+public class UserService implements IValid<User> {
 
     @Autowired
     private UserMapper userMapper;
@@ -32,10 +32,6 @@ public class UserService {
     public ServerResponse save(UserVO userVO){
         BeanValidator.check(userVO);
         User user = userVO.adapt();
-        ServerResponse response = checkValid(user.getUsername());
-        if(!response.isSuccess()){
-            return response;
-        }
         user.setPassword(SecureUtil.md5(user.getPassword()));
         if(userMapper.insert(user) > 0){
             return ServerResponse.createBySuccess();
@@ -43,7 +39,7 @@ public class UserService {
         return ServerResponse.createByError();
     }
 
-    public ServerResponse delete(List<Long> ids) {
+    public ServerResponse delete(List<Long> ids){
         if(CollUtil.isEmpty(ids)){
             return ServerResponse.createByErrorMessage("请选择要移除的用户");
         }
@@ -53,22 +49,19 @@ public class UserService {
         return ServerResponse.createByError();
     }
 
-    public ServerResponse update(UserVO userVO) {
+    public ServerResponse update(UserVO userVO){
         if(userVO.getId()==null){
             return ServerResponse.createByErrorMessage("请选择要修改的用户");
         }
+        BeanValidator.check(userVO);
         User user = userVO.adapt();
-        ServerResponse vaildResponse = checkValid(user.getUsername());
-        if(!vaildResponse.isSuccess()){
-            return vaildResponse;
-        }
         if(userMapper.updateById(user)>0){
             return ServerResponse.createBySuccess();
         }
         return ServerResponse.createByError();
     }
 
-    public ServerResponse find(Long id) {
+    public ServerResponse find(Long id){
         User user = userMapper.selectById(id);
         if(user!=null){
             user.setPassword(null);
@@ -77,17 +70,17 @@ public class UserService {
        return ServerResponse.createByErrorMessage("未找到该用户");
     }
 
-    public ServerResponse findListByCondition(String username, Integer status, PageQuery pageQuery) {
+    public ServerResponse findListByCondition(String username, Integer status, PageQuery pageQuery){
         Wrapper<User> wrapper = Wrappers.<User>lambdaQuery().like(StrUtil.isNotEmpty(username),User::getUsername, username).eq(status!=null,User::getStatus, status);
         IPage<User> page = userMapper.selectPage(pageQuery.adapt(), wrapper);
         return ServerResponse.createBySuccess(page);
     }
 
-    private ServerResponse checkValid(String username) {
-        int resultCount = userMapper.selectCount(Wrappers.<User>lambdaQuery().eq(User::getUsername, username));
-        if (resultCount > 0) {
-            return ServerResponse.createByErrorMessage("用户名已被占用");
-        }
-        return ServerResponse.createBySuccess();
+
+    @Override
+    public boolean checkValid(User user, String colume) {
+        Field field = user.getClass().getField(colume);
+        field.
+        return false;
     }
 }
