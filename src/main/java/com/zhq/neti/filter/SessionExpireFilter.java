@@ -2,6 +2,7 @@ package com.zhq.neti.filter;
 
 import com.zhq.neti.common.Const;
 import com.zhq.neti.common.RequestHolder;
+import com.zhq.neti.common.SessionCache;
 import com.zhq.neti.pojo.User;
 
 import javax.servlet.*;
@@ -21,7 +22,8 @@ public class SessionExpireFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
-        User user = (User)req.getSession().getAttribute(Const.CURRENT_USER);
+        String token = req.getHeader(Const.TOKEN);
+        User user = SessionCache.get(token);
         if (user != null) {
             RequestHolder.add(user);
             RequestHolder.add(req);

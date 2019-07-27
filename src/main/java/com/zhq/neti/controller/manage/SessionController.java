@@ -2,12 +2,11 @@ package com.zhq.neti.controller.manage;
 
 import com.zhq.neti.common.Const;
 import com.zhq.neti.common.ServerResponse;
-import com.zhq.neti.pojo.User;
 import com.zhq.neti.service.SessionService;
+import io.swagger.annotations.ApiImplicitParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpSession;
 
 /**
  * @author zhengquan
@@ -20,17 +19,15 @@ public class SessionController {
     private SessionService sessionService;
 
     @GetMapping
-    public ServerResponse login(@RequestParam String username, @RequestParam String password, HttpSession session){
-        ServerResponse<User> response = sessionService.login(username, password);
-        if(response.isSuccess()){
-            session.setAttribute(Const.CURRENT_USER,response.getData());
-        }
-        return response;
+    public ServerResponse login(String username, String password){
+        return sessionService.login(username, password);
     }
 
     @DeleteMapping
-    public ServerResponse logout(HttpSession session){
-        session.removeAttribute(Const.CURRENT_USER);
+    @ApiImplicitParam(name = "token", value = "token", required = false, dataType = "String",paramType="header")
+    public ServerResponse logout(@RequestHeader HttpHeaders headers){
+        String token = headers.getFirst(Const.TOKEN);
+        sessionService.logout(token);
         return ServerResponse.createBySuccess();
     }
 }

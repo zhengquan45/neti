@@ -5,5 +5,5 @@ package com.zhq.neti.common;
  * @date 2019/7/15
  */
 public class Const {
-    public static final String CURRENT_USER = "currentUser";
+    public static final String TOKEN = "token";
 }

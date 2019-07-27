@@ -2,7 +2,6 @@ package com.zhq.neti.controller.manage;
 
 import com.zhq.neti.common.ServerResponse;
 import com.zhq.neti.service.DeptService;
-import com.zhq.neti.vo.BrandVO;
 import com.zhq.neti.vo.DeptVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

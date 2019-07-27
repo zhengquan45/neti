@@ -1,7 +1,6 @@
 package com.zhq.neti.vo;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.crypto.SecureUtil;
 import com.zhq.neti.common.valid.anno.UserUnique;
 import com.zhq.neti.pojo.User;
 import lombok.Data;

@@ -8,7 +8,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.zhq.neti.common.BeanValidator;
 import com.zhq.neti.common.ServerResponse;
-import com.zhq.neti.common.valid.IValid;
 import com.zhq.neti.mapper.UserMapper;
 import com.zhq.neti.pojo.User;
 import com.zhq.neti.vo.PageQuery;
@@ -16,7 +15,6 @@ import com.zhq.neti.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 /**
@@ -24,7 +22,7 @@ import java.util.List;
  * @date 2019/7/14
  */
 @Service
-public class UserService implements IValid<User> {
+public class UserService {
 
     @Autowired
     private UserMapper userMapper;
@@ -76,11 +74,12 @@ public class UserService implements IValid<User> {
         return ServerResponse.createBySuccess(page);
     }
 
-
-    @Override
-    public boolean checkValid(User user, String colume) {
-        Field field = user.getClass().getField(colume);
-        field.
-        return false;
+    public ServerResponse checkValid(String name) {
+        int resultCount = userMapper.selectCount(Wrappers.<User>lambdaQuery().eq(User::getUsername, name));
+        if (resultCount > 0) {
+            return ServerResponse.createByErrorMessage("用户名已被占用");
+        }
+        return ServerResponse.createBySuccess();
     }
+
 }

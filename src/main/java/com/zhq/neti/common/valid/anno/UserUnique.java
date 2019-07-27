@@ -1,7 +1,7 @@
 package com.zhq.neti.common.valid.anno;
 
 
-import com.zhq.neti.common.valid.UniqueValidator;
+import com.zhq.neti.common.valid.UserUniqueValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -12,10 +12,9 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = UniqueValidator.class)
-public @interface Unique {
-    String values() default "";
-    String message() default "";
+@Constraint(validatedBy = UserUniqueValidator.class)
+public @interface UserUnique {
+    String message() default "用户名已存在";
     Class<?>[] groups() default { };
     Class<? extends Payload>[] payload() default { };
 }

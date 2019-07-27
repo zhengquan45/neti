@@ -2,6 +2,7 @@ package com.zhq.neti.intercepter;
 
 import cn.hutool.core.util.StrUtil;
 import com.zhq.neti.common.Const;
+import com.zhq.neti.common.SessionCache;
 import com.zhq.neti.exception.NoSessionException;
 import com.zhq.neti.pojo.User;
 import lombok.extern.slf4j.Slf4j;
@@ -52,8 +53,8 @@ public class SessionIntercepter implements HandlerInterceptor {
 
         String param = requestParamBuffer.toString();
         log.info("权限拦截器拦截的请求，className:{},methodName:{},param:{}", className, methodName, StrUtil.isEmpty(param)?"无参数":param);
-
-        User user = (User) httpServletRequest.getSession().getAttribute(Const.CURRENT_USER);
+        String token = httpServletRequest.getHeader(Const.TOKEN);
+        User user = SessionCache.get(token);
         if (user == null) {
             throw new NoSessionException("用户未登录");
         }
