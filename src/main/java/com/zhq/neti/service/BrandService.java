@@ -29,10 +29,6 @@ public class BrandService {
     public ServerResponse save(BrandVO brandVO) {
         BeanValidator.check(brandVO);
         Brand brand = brandVO.adapt();
-        ServerResponse response = checkValid(brand.getName());
-        if(!response.isSuccess()){
-            return response;
-        }
         if(brandMapper.insert(brand)>0){
             return ServerResponse.createBySuccess();
         }
@@ -78,7 +74,7 @@ public class BrandService {
         return ServerResponse.createBySuccess(page);
     }
 
-    private ServerResponse checkValid(String name) {
+    public ServerResponse checkValid(String name) {
         int resultCount = brandMapper.selectCount(Wrappers.<Brand>lambdaQuery().eq(Brand::getName, name));
         if (resultCount > 0) {
             return ServerResponse.createByErrorMessage("品牌名称已被占用");

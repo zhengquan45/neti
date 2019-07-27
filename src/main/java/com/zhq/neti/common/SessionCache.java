@@ -23,7 +23,7 @@ public class SessionCache {
     }
 
     public static User get(String token){
-        return cache.get(token);
+        return cache.get(token,true);
     }
 
 }

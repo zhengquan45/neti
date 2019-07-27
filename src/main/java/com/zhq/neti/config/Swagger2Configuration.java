@@ -2,6 +2,7 @@ package com.zhq.neti.config;
 
 import com.google.common.base.Predicates;
 import com.zhq.neti.common.Const;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -27,6 +28,8 @@ import static springfox.documentation.builders.PathSelectors.regex;
 @EnableSwagger2
 public class Swagger2Configuration {
 
+    @Value("${swagger.enable}")
+    private boolean enable;
 
     @Bean
     public Docket manageApi() {
@@ -40,9 +43,8 @@ public class Swagger2Configuration {
                                 regex("/manage/.*")
                         )
                 )
-                .build();
+                .build().enable(enable);
     }
-
 
 
     private List<Parameter> setHeaderToken() {
