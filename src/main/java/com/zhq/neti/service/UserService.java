@@ -69,6 +69,7 @@ public class UserService {
     }
 
     public ServerResponse findListByCondition(String username, Integer status, PageQuery pageQuery){
+        BeanValidator.check(pageQuery);
         Wrapper<User> wrapper = Wrappers.<User>lambdaQuery().like(StrUtil.isNotEmpty(username),User::getUsername, username).eq(status!=null,User::getStatus, status);
         IPage<User> page = userMapper.selectPage(pageQuery.adapt(), wrapper);
         return ServerResponse.createBySuccess(page);

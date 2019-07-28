@@ -66,6 +66,7 @@ public class SkuService {
     }
 
     public ServerResponse findListByCondition(String title, Long spuId, PageQuery pageQuery) {
+        BeanValidator.check(pageQuery);
         Wrapper<Sku> wrapper = Wrappers.<Sku>lambdaQuery().like(StrUtil.isNotEmpty(title),Sku::getTitle, title).eq(spuId!=null,Sku::getSpuId, spuId);
         IPage<Sku> page = skuMapper.selectPage(pageQuery.adapt(), wrapper);
         return ServerResponse.createBySuccess(page);

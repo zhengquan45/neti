@@ -66,6 +66,7 @@ public class CategoryService {
     }
 
     public ServerResponse findListByCondition(String name, PageQuery pageQuery) {
+        BeanValidator.check(pageQuery);
         Wrapper<Category> wrapper = Wrappers.<Category>lambdaQuery().like(Category::getName, name);
         IPage<Category> page = categoryMapper.selectPage(pageQuery.adapt(), wrapper);
         return ServerResponse.createBySuccess(page);

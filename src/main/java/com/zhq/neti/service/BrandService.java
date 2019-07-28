@@ -69,6 +69,7 @@ public class BrandService {
     }
 
     public ServerResponse findListByCondition(String name, Character letter, PageQuery pageQuery) {
+        BeanValidator.check(pageQuery);
         Wrapper<Brand> wrapper = Wrappers.<Brand>lambdaQuery().like(Brand::getName, name).eq(Brand::getLetter, letter);
         IPage<Brand> page = brandMapper.selectPage(pageQuery.adapt(), wrapper);
         return ServerResponse.createBySuccess(page);
