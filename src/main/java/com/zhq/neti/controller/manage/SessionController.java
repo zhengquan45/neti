@@ -19,12 +19,12 @@ public class SessionController {
     private SessionService sessionService;
 
     @GetMapping
+    @ApiImplicitParam(name = "token", value = "token", required = false, dataType = "String",paramType="header")
     public ServerResponse login(String username, String password){
         return sessionService.login(username, password);
     }
 
     @DeleteMapping
-    @ApiImplicitParam(name = "token", value = "token", required = false, dataType = "String",paramType="header")
     public ServerResponse logout(@RequestHeader HttpHeaders headers){
         String token = headers.getFirst(Const.TOKEN);
         sessionService.logout(token);
