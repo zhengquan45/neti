@@ -1,5 +1,6 @@
 package com.zhq.neti.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -13,7 +14,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SupplierSku {
+    @TableId
     private Long supplierId;
+    @TableId
     private Long skuId;
     @TableLogic
     private Boolean isDeleted;

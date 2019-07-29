@@ -2,6 +2,7 @@ package com.zhq.neti.pojo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.zhq.neti.common.enums.BackStockEnum;
 import com.zhq.neti.common.enums.PaymentTypeEnum;
@@ -29,4 +30,6 @@ public class BackStock {
     private PaymentTypeEnum paymentType;
     private BackStockEnum status;
     private Date createTime;
+    @TableLogic
+    private Boolean isDeleted;
 }
