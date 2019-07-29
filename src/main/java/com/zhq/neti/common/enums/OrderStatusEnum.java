@@ -2,7 +2,7 @@ package com.zhq.neti.common.enums;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 
-public enum OrderStatusEnum {
+public enum OrderStatusEnum implements CodeEnum{
     UNPAID(1, "未付款"),  PAID(2, "已付款"), SHIPPED(3, "已发货"),  ACCEPTED(4, "已签收");
 
     @EnumValue//标记数据库存的值是code

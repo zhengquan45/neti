@@ -2,7 +2,7 @@ package com.zhq.neti.common.enums;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 
-public enum AclTypeEnum {
+public enum AclTypeEnum implements CodeEnum{
 
     MENU(1, "菜单"),BUTTON(2, "按钮"),OTHER(3, "其他");
 

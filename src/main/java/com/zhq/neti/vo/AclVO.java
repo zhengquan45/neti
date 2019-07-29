@@ -4,7 +4,9 @@ import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.zhq.neti.common.enums.AclTypeEnum;
 import com.zhq.neti.pojo.Acl;
+import com.zhq.neti.util.EnumUtil;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
@@ -13,6 +15,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+/**
+ * @author zhengquan
+ */
 @Data
 public class AclVO {
     @TableId(type = IdType.ID_WORKER)
@@ -43,6 +48,7 @@ public class AclVO {
     public Acl adapt() {
         Acl acl = new Acl();
         BeanUtil.copyProperties(this,acl);
+        acl.setType(EnumUtil.getEnumByCode(this.type, AclTypeEnum.class));
         return acl;
     }
 }

@@ -649,22 +649,4 @@ CREATE TABLE `t_warehouse_sku`  (
   PRIMARY KEY (`warehouse_id`, `sku_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '仓库商品库存表' ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Triggers structure for table t_dept
--- ----------------------------
-DROP TRIGGER IF EXISTS `t1`;
-delimiter ;;
-CREATE TRIGGER `t1` AFTER UPDATE ON `t_dept` FOR EACH ROW UPDATE t_emp SET dept_id=NEW.id WHERE dept_id=OLD.id
-;;
-delimiter ;
 
--- ----------------------------
--- Triggers structure for table t_dept
--- ----------------------------
-DROP TRIGGER IF EXISTS `t2`;
-delimiter ;;
-CREATE TRIGGER `t2` AFTER DELETE ON `t_dept` FOR EACH ROW DELETE FROM t_emp WHERE dept_id=OLD.id
-;;
-delimiter ;
-
-SET FOREIGN_KEY_CHECKS = 1;

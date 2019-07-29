@@ -2,7 +2,7 @@ package com.zhq.neti.common.enums;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 
-public enum  EmpStatusEnum {
+public enum  EmpStatusEnum implements CodeEnum{
 
     ON(1, "在职"),QUIT(2, "离职"),VACATION(3, "休假"),DEAD(4, "死亡");
 

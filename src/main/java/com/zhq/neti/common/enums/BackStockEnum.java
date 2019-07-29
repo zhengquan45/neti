@@ -2,7 +2,11 @@ package com.zhq.neti.common.enums;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 
-public enum BackStockEnum {
+/**
+ * @author zhengquan
+ */
+
+public enum BackStockEnum implements CodeEnum{
     SUCCESS(1, "退货成功"),  FAIL(0, "无法退货");
 
     @EnumValue//标记数据库存的值是code
@@ -21,4 +25,6 @@ public enum BackStockEnum {
     public String getDescp() {
         return descp;
     }
+
+
 }

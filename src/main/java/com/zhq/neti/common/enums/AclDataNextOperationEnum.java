@@ -2,7 +2,11 @@ package com.zhq.neti.common.enums;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 
-public enum AclDataNextOperationEnum {
+/**
+ * @author zhengquan
+ */
+
+public enum AclDataNextOperationEnum implements CodeEnum{
     NONE(0, "没其他参数控制"),AND(1, "与"),OR(2, "或");
 
     @EnumValue//标记数据库存的值是code
@@ -14,6 +18,7 @@ public enum AclDataNextOperationEnum {
         this.descp = descp;
     }
 
+    @Override
     public int getCode() {
         return code;
     }

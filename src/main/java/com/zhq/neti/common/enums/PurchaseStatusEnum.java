@@ -2,7 +2,7 @@ package com.zhq.neti.common.enums;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 
-public enum PurchaseStatusEnum {
+public enum PurchaseStatusEnum implements CodeEnum{
     UNCOMPLETE(1, "未完成"),  COMPLETE(2, "已完成");
 
     @EnumValue//标记数据库存的值是code

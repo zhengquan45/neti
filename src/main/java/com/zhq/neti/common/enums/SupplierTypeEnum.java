@@ -2,7 +2,7 @@ package com.zhq.neti.common.enums;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 
-public enum SupplierTypeEnum {
+public enum SupplierTypeEnum implements CodeEnum{
     FACTORY(1, "厂家"),  AGENT(2, "代理商"),PERSONAL(3, "个人");
 
     @EnumValue//标记数据库存的值是code

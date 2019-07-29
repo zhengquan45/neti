@@ -17,7 +17,7 @@ public class DeptVO {
     private String name;
     @NotBlank(message = "部门缩写不可以为空")
     @Length(min=1,max =5,message = "部门缩写名称长度需要在1-5个字之内")
-    @Pattern(regexp = "/^[A-Z]+$/",message = "部门缩写名称只能是大写字母")
+    @Pattern(regexp = "[A-Z]+",message = "部门缩写名称只能是大写字母")
     private String alias;
 
     public Dept adapt(){

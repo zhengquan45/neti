@@ -2,7 +2,7 @@ package com.zhq.neti.common.enums;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 
-public enum  PaymentTypeEnum {
+public enum  PaymentTypeEnum implements CodeEnum{
 
     CASH_CARD(1, "借记卡"),CREDIT_CARD(2, "信用卡"),CASH(3, "现金"),WECHAT(4, "微信"),ALIPAY(5, "支付宝");
 

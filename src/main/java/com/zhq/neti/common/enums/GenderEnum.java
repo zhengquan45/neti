@@ -2,7 +2,7 @@ package com.zhq.neti.common.enums;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 
-public enum GenderEnum {
+public enum GenderEnum implements CodeEnum{
     MALE(1, "男"),  FEMALE(2, "女");
 
     @EnumValue//标记数据库存的值是code

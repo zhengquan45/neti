@@ -4,23 +4,29 @@ import cn.hutool.core.collection.CollUtil;
 import com.zhq.neti.common.BeanValidator;
 import com.zhq.neti.common.ServerResponse;
 import com.zhq.neti.mapper.AclMapper;
+import com.zhq.neti.mapper.AclModuleMapper;
 import com.zhq.neti.pojo.Acl;
+import com.zhq.neti.pojo.AclModule;
+import com.zhq.neti.vo.AclModuleVO;
 import com.zhq.neti.vo.AclVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * @author zhengquan
+ */
 @Service
 public class AclModuleService {
 
     @Autowired
-    private AclMapper aclMapper;
+    private AclModuleMapper aclModuleMapper;
 
-    public ServerResponse save(AclVO aclVO) {
-        BeanValidator.check(aclVO);
-        Acl acl = aclVO.adapt();
-        if(aclMapper.insert(acl)>0){
+    public ServerResponse save(AclModuleVO aclModuleVO) {
+        BeanValidator.check(aclModuleVO);
+        AclModule aclModule = aclModuleVO.adapt();
+        if(aclModuleMapper.insert(aclModule)>0){
             return ServerResponse.createBySuccess();
         }
         return ServerResponse.createByError();
@@ -28,31 +34,32 @@ public class AclModuleService {
 
     public ServerResponse delete(List<Long> ids) {
         if(CollUtil.isEmpty(ids)){
-            return ServerResponse.createByErrorMessage("请选择移除的权限点");
+            return ServerResponse.createByErrorMessage("请选择移除的权限模块");
         }
-        if(aclMapper.deleteBatchIds(ids)>0){
+        if(aclModuleMapper.deleteBatchIds(ids)>0){
             return ServerResponse.createBySuccess();
         }
         return ServerResponse.createByError();
     }
 
-    public ServerResponse update(AclVO aclVO) {
-        if(aclVO.getId()==null){
-            return ServerResponse.createByErrorMessage("请选择要修改的权限点");
+    public ServerResponse update(AclModuleVO aclModuleVO) {
+        if(aclModuleVO.getId()==null){
+            return ServerResponse.createByErrorMessage("请选择要修改的权限模块");
         }
-        Acl acl = aclVO.adapt();
-        if(aclMapper.updateById(acl)>0){
+        BeanValidator.check(aclModuleVO);
+        AclModule aclModule = aclModuleVO.adapt();
+        if(aclModuleMapper.updateById(aclModule)>0){
             return ServerResponse.createBySuccess();
         }
         return ServerResponse.createByError();
     }
 
     public ServerResponse find(Long id) {
-        Acl acl = aclMapper.selectById(id);
-        if(acl!=null){
-            return ServerResponse.createBySuccess(acl);
+        AclModule aclModule = aclModuleMapper.selectById(id);
+        if(aclModule!=null){
+            return ServerResponse.createBySuccess(aclModule);
         }
-        return ServerResponse.createByErrorMessage("未找到该权限点");
+        return ServerResponse.createByErrorMessage("未找到该权限模块");
     }
 
 }
