@@ -21,7 +21,7 @@ public class Rating {
     private Long id;
     private Long orderId;
     private Long skuId;
-    private String img;
+    private String images;
     private Integer rating;
     private String comment;
     private Date createTime;

@@ -14,6 +14,10 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.util.Date;
 
+/**
+ * @author zhengquan
+ * @date 2019/7/20
+ */
 @TableName("t_backstock")
 @Data
 @Builder

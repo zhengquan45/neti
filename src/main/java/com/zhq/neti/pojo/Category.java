@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
  * @author zhengquan
  * @date 2019/7/20
  */
-@TableName("t_brand")
+@TableName("t_category")
 @Data
 @Builder
 @NoArgsConstructor
@@ -24,7 +24,6 @@ public class Category {
     private Long id;
     private String name;
     private Long parentId;
-    private String level;
     private Integer sort;
     @TableLogic
     private Boolean isDeleted;

@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * @author zhengquan
+ * @date 2019/7/20
  */
 @TableName("t_brand")
 @Data
@@ -23,7 +24,7 @@ public class Brand {
     @TableId(type = IdType.ID_WORKER)
     private Long id;
     private String name;
-    private String image;
+    private String images;
     private Character letter;
     @TableLogic
     private Boolean isDeleted;

@@ -1,5 +1,6 @@
 package com.zhq.neti;
 
+import com.zhq.neti.mapper.BackStockMapper;
 import com.zhq.neti.mapper.CityMapper;
 import com.zhq.neti.pojo.City;
 import com.zhq.neti.service.UserService;
@@ -21,10 +22,12 @@ public class NetiApplicationTests {
     @Autowired
     private CityMapper cityMapper;
 
+    @Autowired
+    private BackStockMapper backStockMapper;
+
 
     @Test
     public void contextLoads() {
-//        System.out.println(userService.checkValid("111", "zhengquan"));
 
 
     }
@@ -32,6 +35,12 @@ public class NetiApplicationTests {
     @Test
     public void test1() {
         List<City> allCity = cityMapper.findAllCity();
+    }
+
+
+    @Test
+    public void test2() {
+
     }
 
 
