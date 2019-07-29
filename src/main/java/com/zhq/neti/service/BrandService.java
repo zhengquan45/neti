@@ -49,11 +49,8 @@ public class BrandService {
         if(brandVO.getId()==null){
             return ServerResponse.createByErrorMessage("请选择要修改的品牌");
         }
+        BeanValidator.check(brandVO);
         Brand brand = brandVO.adapt();
-        ServerResponse serverResponse = checkValid(brand.getName());
-        if(!serverResponse.isSuccess()){
-            return serverResponse;
-        }
         if(brandMapper.updateById(brand)>0){
             return ServerResponse.createBySuccess();
         }
