@@ -11,11 +11,67 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 29/07/2019 16:31:29
+ Date: 29/07/2019 17:27:33
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for t_acl
+-- ----------------------------
+DROP TABLE IF EXISTS `t_acl`;
+CREATE TABLE `t_acl`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '权限id',
+  `code` int(11) NULL DEFAULT NULL COMMENT '权限码',
+  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '权限名称',
+  `acl_module_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '权限所在的权限模块id',
+  `url` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '请求的url, 可以填正则表达式',
+  `type` int(11) NOT NULL DEFAULT 3 COMMENT '类型，1：菜单，2：按钮，3：其他',
+  `status` int(11) NOT NULL DEFAULT 1 COMMENT '状态，1：正常，0：冻结',
+  `sort` int(11) NOT NULL DEFAULT 0 COMMENT '权限在当前模块下的顺序，由小到大',
+  `remark` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '备注',
+  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '添加时间',
+  `is_deleted` tinyint(1) NULL DEFAULT NULL COMMENT '逻辑删除',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for t_acl_data
+-- ----------------------------
+DROP TABLE IF EXISTS `t_acl_data`;
+CREATE TABLE `t_acl_data`  (
+  `id` bigint(20) NOT NULL,
+  `acl_id` bigint(20) NOT NULL COMMENT '对应权限表主键',
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '状态，1：可用，0：不可用',
+  `param` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '参数',
+  `operation` int(11) NOT NULL DEFAULT 0 COMMENT '操作类型，0；等于，1：大于，2：小于，3：大于等于，4：小于等于，5：包含，6：介于之间，。。。',
+  `value1` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0',
+  `value2` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0',
+  `next_param_op` int(11) NOT NULL DEFAULT 0 COMMENT '后续有参数时连接的关系，0:没有其他参数控制，1：与&&，2：或||',
+  `sort` tinyint(4) NOT NULL DEFAULT 0 COMMENT '顺序',
+  `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '添加时间',
+  `is_deleted` tinyint(1) NULL DEFAULT 0,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `idx_acl_id`(`acl_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '数据权限表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for t_acl_module
+-- ----------------------------
+DROP TABLE IF EXISTS `t_acl_module`;
+CREATE TABLE `t_acl_module`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '权限模块id',
+  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '权限模块名称',
+  `parent_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '上级权限模块id',
+  `level` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '权限模块层级',
+  `sort` int(11) NOT NULL DEFAULT 0 COMMENT '权限模块在当前层级下的顺序，由小到大',
+  `status` int(11) NOT NULL DEFAULT 1 COMMENT '状态，1：正常，0：冻结',
+  `remark` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '备注',
+  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '添加时间',
+  `is_deleted` tinyint(1) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_backstock
@@ -349,6 +405,30 @@ CREATE TABLE `t_role`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Table structure for t_role_acl
+-- ----------------------------
+DROP TABLE IF EXISTS `t_role_acl`;
+CREATE TABLE `t_role_acl`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `role_id` bigint(20) NOT NULL COMMENT '角色id',
+  `acl_id` bigint(20) NOT NULL COMMENT '权限id',
+  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '添加时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for t_role_user
+-- ----------------------------
+DROP TABLE IF EXISTS `t_role_user`;
+CREATE TABLE `t_role_user`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `role_id` bigint(20) NOT NULL COMMENT '角色id',
+  `user_id` bigint(20) NOT NULL COMMENT '用户id',
+  `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
 -- Table structure for t_shop
 -- ----------------------------
 DROP TABLE IF EXISTS `t_shop`;
@@ -570,80 +650,21 @@ CREATE TABLE `t_warehouse_sku`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '仓库商品库存表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for t_acl
+-- Triggers structure for table t_dept
 -- ----------------------------
-DROP TABLE IF EXISTS `t_acl`;
-CREATE TABLE `t_acl`  (
-  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '权限id',
-  `code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '权限码',
-  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '权限名称',
-  `acl_module_id` bigint NOT NULL DEFAULT 0 COMMENT '权限所在的权限模块id',
-  `url` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '请求的url, 可以填正则表达式',
-  `type` int(11) NOT NULL DEFAULT 3 COMMENT '类型，1：菜单，2：按钮，3：其他',
-  `status` int(11) NOT NULL DEFAULT 1 COMMENT '状态，1：正常，0：冻结',
-  `sort` int(11) NOT NULL DEFAULT 0 COMMENT '权限在当前模块下的顺序，由小到大',
-  `remark` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '备注',
-  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '添加时间',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+DROP TRIGGER IF EXISTS `t1`;
+delimiter ;;
+CREATE TRIGGER `t1` AFTER UPDATE ON `t_dept` FOR EACH ROW UPDATE t_emp SET dept_id=NEW.id WHERE dept_id=OLD.id
+;;
+delimiter ;
 
 -- ----------------------------
--- Table structure for t_acl_data
+-- Triggers structure for table t_dept
 -- ----------------------------
-DROP TABLE IF EXISTS `t_acl_data`;
-CREATE TABLE `t_acl_data`  (
-  `id` bigint NOT NULL,
-  `acl_id` bigint NOT NULL COMMENT '对应权限表主键',
-  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '状态，1：可用，0：不可用',
-  `param` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '参数',
-  `operation` int(11) NOT NULL DEFAULT 0 COMMENT '操作类型，0；等于，1：大于，2：小于，3：大于等于，4：小于等于，5：包含，6：介于之间，。。。',
-  `value1` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0',
-  `value2` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0',
-  `next_param_op` int(11) NOT NULL DEFAULT 0 COMMENT '后续有参数时连接的关系，0:没有其他参数控制，1：与&&，2：或||',
-  `sort` tinyint(4) NOT NULL DEFAULT 0 COMMENT '顺序',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `idx_acl_id`(`acl_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '数据权限表' ROW_FORMAT = Dynamic;
+DROP TRIGGER IF EXISTS `t2`;
+delimiter ;;
+CREATE TRIGGER `t2` AFTER DELETE ON `t_dept` FOR EACH ROW DELETE FROM t_emp WHERE dept_id=OLD.id
+;;
+delimiter ;
 
--- ----------------------------
--- Table structure for t_acl_module
--- ----------------------------
-DROP TABLE IF EXISTS `t_acl_module`;
-CREATE TABLE `t_acl_module`  (
-  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '权限模块id',
-  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '权限模块名称',
-  `parent_id` bigint NOT NULL DEFAULT 0 COMMENT '上级权限模块id',
-  `level` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '权限模块层级',
-  `sort` int(11) NOT NULL DEFAULT 0 COMMENT '权限模块在当前层级下的顺序，由小到大',
-  `status` int(11) NOT NULL DEFAULT 1 COMMENT '状态，1：正常，0：冻结',
-  `remark` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '备注',
-  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '添加时间',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
-
-
--- ----------------------------
--- Table structure for t_role_acl
--- ----------------------------
-DROP TABLE IF EXISTS `t_role_acl`;
-CREATE TABLE `t_role_acl`  (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `role_id` bigint NOT NULL COMMENT '角色id',
-  `acl_id` bigint NOT NULL COMMENT '权限id',
-  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '添加时间',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Table structure for t_role_user
--- ----------------------------
-DROP TABLE IF EXISTS `t_role_user`;
-CREATE TABLE `t_role_user`  (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `role_id` bigint NOT NULL COMMENT '角色id',
-  `user_id` bigint NOT NULL COMMENT '用户id',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
-
-
-
+SET FOREIGN_KEY_CHECKS = 1;
