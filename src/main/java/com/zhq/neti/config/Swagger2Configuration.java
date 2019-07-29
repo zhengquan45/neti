@@ -59,7 +59,7 @@ public class Swagger2Configuration {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("在线教育平台,osp")
+                .title("xxxx")
                 .description("<h4>接口里pager对象只在查询列表时用到</h4>")
                 .termsOfServiceUrl("http://springfox.io")
                 .contact(new Contact("名字", "www.baidu.com", "test@163.com"))
