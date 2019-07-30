@@ -228,10 +228,10 @@ CREATE TABLE `t_dept`  (
 DROP TABLE IF EXISTS `t_emp`;
 CREATE TABLE `t_emp`  (
   `id` bigint(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `wid` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '工号',
-  `ename` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '姓名',
+  `code` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '工号',
+  `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '姓名',
   `sex` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '性别',
-  `married` tinyint(1) NOT NULL COMMENT '婚否',
+  `married` tinyint(1) DEFAULT '0' COMMENT '婚否',
   `education` tinyint(4) NOT NULL COMMENT '学历：1大专,2本科,3研究生,4博士,5其他',
   `tel` char(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '电话',
   `email` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '邮箱',
