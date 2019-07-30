@@ -59,10 +59,10 @@ public class Swagger2Configuration {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("xxxx")
-                .description("<h4>接口里pager对象只在查询列表时用到</h4>")
+                .title("新零售")
+                .description("<h4>关于新零售项目实践项目</h4>")
                 .termsOfServiceUrl("http://springfox.io")
-                .contact(new Contact("名字", "www.baidu.com", "test@163.com"))
+                .contact(new Contact("郑权", "www.baidu.com", "zheng_quan45@163.com"))
                 .license("Apache License Version 2.0")
                 .licenseUrl("https://github.com/springfox/springfox/blob/master/LICENSE")
                 .version("1.0")
