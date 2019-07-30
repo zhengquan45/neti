@@ -3,7 +3,6 @@ package com.zhq.neti.vo;
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.zhq.neti.common.enums.AclTypeEnum;
 import com.zhq.neti.pojo.Acl;
 import com.zhq.neti.util.EnumUtil;
@@ -13,7 +12,6 @@ import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 
 /**
  * @author zhengquan
@@ -41,9 +39,6 @@ public class AclVO {
     private Integer sort;
     @Length(min = 0, max = 200, message = "权限点备注长度需要在200个字符以内")
     private String remark;
-    private Date createTime;
-    @TableLogic
-    private Boolean isDeleted;
 
     public Acl adapt() {
         Acl acl = new Acl();
