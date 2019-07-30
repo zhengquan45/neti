@@ -15,7 +15,7 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RoleUser {
+public class UserRole {
     @TableId(type = IdType.ID_WORKER)
     private Long id;
     private Long roleId;

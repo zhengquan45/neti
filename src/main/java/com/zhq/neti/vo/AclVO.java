@@ -1,11 +1,7 @@
 package com.zhq.neti.vo;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.zhq.neti.common.enums.AclTypeEnum;
 import com.zhq.neti.pojo.Acl;
-import com.zhq.neti.util.EnumUtil;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
@@ -18,7 +14,6 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 public class AclVO {
-    @TableId(type = IdType.ID_WORKER)
     private Long id;
     @NotNull(message = "权限码不能为空")
     private Integer code;
@@ -43,7 +38,6 @@ public class AclVO {
     public Acl adapt() {
         Acl acl = new Acl();
         BeanUtil.copyProperties(this,acl);
-        acl.setType(EnumUtil.getEnumByCode(this.type, AclTypeEnum.class));
         return acl;
     }
 }

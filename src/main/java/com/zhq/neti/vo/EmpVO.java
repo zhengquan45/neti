@@ -1,7 +1,6 @@
 package com.zhq.neti.vo;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.zhq.neti.common.enums.EduEnum;
 import com.zhq.neti.common.enums.GenderEnum;
 import com.zhq.neti.pojo.Emp;
@@ -34,8 +33,6 @@ public class EmpVO {
     private Date hiredate;
     private Date termdate;
     private Integer status;
-    @TableLogic
-    private Boolean isDeleted;
 
     public Emp adapt() {
         Emp emp = new Emp();

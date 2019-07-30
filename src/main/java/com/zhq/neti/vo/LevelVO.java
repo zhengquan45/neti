@@ -1,7 +1,6 @@
 package com.zhq.neti.vo;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.zhq.neti.pojo.Level;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
@@ -18,8 +17,6 @@ public class LevelVO {
     private String level;
     @NotNull(message = "折扣不可以为空")
     private BigDecimal discount;
-    @TableLogic
-    private Boolean isDeleted;
 
     public Level adapt() {
         Level level = new Level();
