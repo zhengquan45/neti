@@ -3,12 +3,6 @@ package com.zhq.neti.service;
 import cn.hutool.core.collection.CollUtil;
 import com.zhq.neti.common.BeanValidator;
 import com.zhq.neti.common.ServerResponse;
-import com.zhq.neti.mapper.AclMapper;
-import com.zhq.neti.mapper.AclModuleMapper;
-import com.zhq.neti.pojo.Acl;
-import com.zhq.neti.pojo.AclModule;
-import com.zhq.neti.vo.AclModuleVO;
-import com.zhq.neti.vo.AclVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

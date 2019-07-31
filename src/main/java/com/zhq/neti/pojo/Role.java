@@ -9,6 +9,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @TableName("t_role")
 @Data
 @Builder
@@ -18,6 +20,8 @@ public class Role {
     @TableId(type = IdType.ID_WORKER)
     private Long id;
     private String name;
+    private String desc;
+    private Date createTime;
     @TableLogic
     private Boolean isDeleted;
 }

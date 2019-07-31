@@ -22,7 +22,7 @@ public class Acl {
     private Long id;
     private Integer code;
     private String name;
-    private Long aclModuleId;
+    private String icon;
     private String url;
     private AclTypeEnum type;
     private Integer status;

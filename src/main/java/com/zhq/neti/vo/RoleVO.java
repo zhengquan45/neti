@@ -16,6 +16,7 @@ public class RoleVO {
     @NotBlank(message = "角色名称不可以为空")
     @Length(min=1,max = 100,message = "角色名称长度需要在1-100个字之内")
     private String name;
+    private String desc;
 
     public Role adapt() {
         Role role = new Role();
