@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 29/07/2019 17:27:33
+ Date: 31/07/2019 17:48:00
 */
 
 SET NAMES utf8mb4;
@@ -25,16 +25,16 @@ CREATE TABLE `t_acl`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '权限id',
   `code` int(11) NULL DEFAULT NULL COMMENT '权限码',
   `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '权限名称',
-  `acl_module_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '权限所在的权限模块id',
+  `icon` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '显示的图标',
   `url` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '请求的url, 可以填正则表达式',
-  `type` int(11) NOT NULL DEFAULT 3 COMMENT '类型，1：菜单，2：按钮，3：其他',
+  `type` int(11) NOT NULL DEFAULT 3 COMMENT '类型，1：菜单，2：跳转按钮，3：api按钮',
   `status` int(11) NOT NULL DEFAULT 1 COMMENT '状态，1：正常，0：冻结',
   `sort` int(11) NOT NULL DEFAULT 0 COMMENT '权限在当前模块下的顺序，由小到大',
   `remark` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '备注',
   `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '添加时间',
   `is_deleted` tinyint(1) NULL DEFAULT NULL COMMENT '逻辑删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_acl_data
@@ -55,23 +55,6 @@ CREATE TABLE `t_acl_data`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_acl_id`(`acl_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '数据权限表' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Table structure for t_acl_module
--- ----------------------------
-DROP TABLE IF EXISTS `t_acl_module`;
-CREATE TABLE `t_acl_module`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '权限模块id',
-  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '权限模块名称',
-  `parent_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '上级权限模块id',
-  `level` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '权限模块层级',
-  `sort` int(11) NOT NULL DEFAULT 0 COMMENT '权限模块在当前层级下的顺序，由小到大',
-  `status` int(11) NOT NULL DEFAULT 1 COMMENT '状态，1：正常，0：冻结',
-  `remark` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '备注',
-  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '添加时间',
-  `is_deleted` tinyint(1) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_backstock
@@ -231,7 +214,7 @@ CREATE TABLE `t_emp`  (
   `code` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '工号',
   `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '姓名',
   `sex` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '性别',
-  `married` tinyint(1) DEFAULT '0' COMMENT '婚否',
+  `married` tinyint(1) NOT NULL DEFAULT 0 COMMENT '婚否',
   `education` tinyint(4) NOT NULL COMMENT '学历：1大专,2本科,3研究生,4博士,5其他',
   `tel` char(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '电话',
   `email` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '邮箱',
@@ -244,12 +227,12 @@ CREATE TABLE `t_emp`  (
   `status` tinyint(3) UNSIGNED NOT NULL COMMENT '状态：1在职,2休假,3离职,4死亡',
   `is_deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `unq_wid`(`wid`) USING BTREE,
+  UNIQUE INDEX `unq_wid`(`code`) USING BTREE,
   INDEX `idx_job_id`(`job_id`) USING BTREE,
   INDEX `idx_dept_id`(`dept_id`) USING BTREE,
   INDEX `idx_status`(`status`) USING BTREE,
   INDEX `idx_mgr_id`(`mgr_id`) USING BTREE,
-  INDEX `idx_wid`(`wid`) USING BTREE
+  INDEX `idx_wid`(`code`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '员工表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -262,7 +245,7 @@ CREATE TABLE `t_job`  (
   `is_deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `unq_job`(`name`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '职位表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1156021973575286786 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '职位表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_level
@@ -399,9 +382,11 @@ CREATE TABLE `t_rating`  (
 DROP TABLE IF EXISTS `t_role`;
 CREATE TABLE `t_role`  (
   `id` bigint(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `role` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色名称',
+  `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色名称',
+  `desc` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色描述',
+  `create_time` timestamp(0) NULL DEFAULT NULL COMMENT '添加时间',
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `unq_role`(`role`) USING BTREE
+  UNIQUE INDEX `unq_role`(`name`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -414,7 +399,7 @@ CREATE TABLE `t_role_acl`  (
   `acl_id` bigint(20) NOT NULL COMMENT '权限id',
   `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '添加时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_role_user
@@ -426,7 +411,7 @@ CREATE TABLE `t_role_user`  (
   `user_id` bigint(20) NOT NULL COMMENT '用户id',
   `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_shop
@@ -648,5 +633,4 @@ CREATE TABLE `t_warehouse_sku`  (
   `is_deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
   PRIMARY KEY (`warehouse_id`, `sku_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '仓库商品库存表' ROW_FORMAT = Dynamic;
-
 
