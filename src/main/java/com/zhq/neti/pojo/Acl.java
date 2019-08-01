@@ -20,6 +20,8 @@ import java.util.Date;
 public class Acl {
     @TableId(type = IdType.ID_WORKER)
     private Long id;
+    private Long parentId;
+    private String level;
     private Integer code;
     private String name;
     private String icon;

@@ -18,6 +18,8 @@ public class AclVO {
     private Long id;
     @NotNull(message = "权限码不能为空")
     private Integer code;
+    private Long parentId =0L;
+    private String level;
     @NotBlank(message = "权限名称不可以为空")
     @Length(min=1,max = 100,message = "权限名称长度需要在1-100个字之内")
     private String name;
