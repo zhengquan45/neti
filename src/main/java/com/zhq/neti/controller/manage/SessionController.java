@@ -30,4 +30,10 @@ public class SessionController {
         sessionService.logout(token);
         return ServerResponse.createBySuccess();
     }
+
+    @GetMapping("/menu")
+    public ServerResponse menu(){
+        return sessionService.menu();
+    }
+
 }

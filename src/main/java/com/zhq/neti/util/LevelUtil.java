@@ -12,7 +12,7 @@ public class LevelUtil {
         if (StrUtil.isBlank(parentLevel)) {
             return ROOT;
         } else {
-            return StrUtil.join(parentLevel, SEPARATOR, parentId);
+            return StrUtil.join(SEPARATOR, parentLevel,parentId);
         }
     }
 }

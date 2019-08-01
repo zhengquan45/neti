@@ -37,6 +37,8 @@ public class AclVO {
     @NotNull(message = "必须指定权限点的状态")
     @Range(max = 1, message = "权限点状态不合法")
     private Integer status;
+    @NotNull(message = "必须指定权限点的隐藏状态")
+    private Boolean hidden;
     @NotNull(message = "必须指定权限点的展示顺序")
     private Integer sort;
     @Length(max = 200, message = "权限点备注长度需要在200个字符以内")

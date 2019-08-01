@@ -30,6 +30,7 @@ public class Acl {
     private String url;
     private AclTypeEnum type;
     private Integer status;
+    private Boolean hidden;
     private Integer sort;
     private String remark;
     private Date createTime;

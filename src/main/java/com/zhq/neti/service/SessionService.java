@@ -9,6 +9,7 @@ import com.google.common.collect.Lists;
 import com.zhq.neti.common.RequestHolder;
 import com.zhq.neti.common.ServerResponse;
 import com.zhq.neti.common.SessionCache;
+import com.zhq.neti.common.enums.AclTypeEnum;
 import com.zhq.neti.mapper.AclMapper;
 import com.zhq.neti.mapper.RoleAclMapper;
 import com.zhq.neti.mapper.UserMapper;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static org.springframework.util.ObjectUtils.isEmpty;
 
@@ -46,13 +48,13 @@ public class SessionService {
     public ServerResponse login(String username, String password) {
 
         User user = userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getUsername, username).eq(User::getPassword, SecureUtil.md5(password)));
-        if(user!=null){
+        if (user != null) {
             user.setPassword(null);
             String token = IdUtil.fastSimpleUUID();
-            SessionCache.save(token,user);
-            Map<String,Object> result = MapUtil.newHashMap();
-            result.put("user",user);
-            result.put("token",token);
+            SessionCache.save(token, user);
+            Map<String, Object> result = MapUtil.newHashMap();
+            result.put("user", user);
+            result.put("token", token);
             return ServerResponse.createBySuccess(result);
         }
         return ServerResponse.createByErrorMessage("账号或密码错误");
@@ -62,9 +64,9 @@ public class SessionService {
         SessionCache.remove(token);
     }
 
-    private  boolean isSuperAdmin(){
+    private boolean isSuperAdmin() {
         User currentUser = RequestHolder.getCurrentUser();
-        if(currentUser.getRoleId()==0){
+        if (currentUser.getRoleId() == 0) {
             return true;
         }
         return false;
@@ -76,29 +78,36 @@ public class SessionService {
     }
 
 
-
     public List<Acl> getUserAclList(Long userId) {
         if (isSuperAdmin()) {
             return aclMapper.selectList(null);
         }
-        List<Object> userRoleIdList = userRoleMapper.selectObjs(Wrappers.<UserRole>lambdaQuery().select(UserRole::getRoleId).eq(UserRole::getUserId,userId));
+        List<Object> userRoleIdList = userRoleMapper.selectObjs(Wrappers.<UserRole>lambdaQuery().select(UserRole::getRoleId).eq(UserRole::getUserId, userId));
         if (CollUtil.isEmpty(userRoleIdList)) {
             return Lists.newArrayList();
         }
-        List<Object> userAclIdList = roleAclMapper.selectObjs(Wrappers.<RoleAcl>lambdaQuery().select(RoleAcl::getAclId).in(RoleAcl::getRoleId,userRoleIdList));
+        List<Object> userAclIdList = roleAclMapper.selectObjs(Wrappers.<RoleAcl>lambdaQuery().select(RoleAcl::getAclId).in(RoleAcl::getRoleId, userRoleIdList));
         if (CollUtil.isEmpty(userAclIdList)) {
             return Lists.newArrayList();
         }
-        return aclMapper.selectList(Wrappers.<Acl>lambdaQuery().in(Acl::getId,userAclIdList));
+        return aclMapper.selectList(Wrappers.<Acl>lambdaQuery().in(Acl::getId, userAclIdList));
     }
 
     public List<Acl> getRoleAclList(int roleId) {
-        List<Object> aclIdList = roleAclMapper.selectObjs(Wrappers.<RoleAcl>lambdaQuery().select(RoleAcl::getAclId).eq(RoleAcl::getRoleId,roleId));
+        List<Object> aclIdList = roleAclMapper.selectObjs(Wrappers.<RoleAcl>lambdaQuery().select(RoleAcl::getAclId).eq(RoleAcl::getRoleId, roleId));
         if (CollUtil.isEmpty(aclIdList)) {
             return Lists.newArrayList();
         }
-        return aclMapper.selectList(Wrappers.<Acl>lambdaQuery().in(Acl::getId,aclIdList));
+        return aclMapper.selectList(Wrappers.<Acl>lambdaQuery().in(Acl::getId, aclIdList));
     }
 
 
+    public ServerResponse menu() {
+        List<Acl> currentUserAclList = getCurrentUserAclList();
+        List<Acl> aclList = currentUserAclList.stream().filter(acl -> !acl.getType().equals(AclTypeEnum.OTHER)).collect(Collectors.toList());
+        if (CollUtil.isEmpty(aclList)) {
+            return ServerResponse.createBySuccess(CollUtil.newArrayList());
+        }
+        return null;
+    }
 }
