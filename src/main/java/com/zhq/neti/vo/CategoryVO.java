@@ -18,7 +18,7 @@ public class CategoryVO {
     @NotBlank(message = "品牌名称不可以为空")
     @Length(min=1,max = 100,message = "品牌名称长度需要在1-100个字之内")
     private String name;
-    private Long parentId;
+    private Long parentId = 0L;
     private Boolean ifParent;
     private Integer sort;
 

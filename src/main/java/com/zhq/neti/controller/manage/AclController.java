@@ -24,8 +24,8 @@ public class AclController {
     }
 
     @DeleteMapping
-    public ServerResponse delete(@RequestParam("ids") List<Long> ids){
-        return aclService.delete(ids);
+    public ServerResponse delete(@RequestParam Long id){
+        return aclService.delete(id);
     }
 
     @PutMapping

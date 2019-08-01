@@ -1,8 +1,11 @@
 package com.zhq.neti;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.zhq.neti.mapper.BackStockMapper;
 import com.zhq.neti.mapper.CityMapper;
+import com.zhq.neti.mapper.UserRoleMapper;
 import com.zhq.neti.pojo.City;
+import com.zhq.neti.pojo.UserRole;
 import com.zhq.neti.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,31 +19,17 @@ import java.util.List;
 @SpringBootTest
 public class NetiApplicationTests {
 
-    @Autowired
-    private UserService userService;
 
     @Autowired
-    private CityMapper cityMapper;
-
-    @Autowired
-    private BackStockMapper backStockMapper;
-
-
-    @Test
-    public void contextLoads() {
-
-
-    }
-
-    @Test
-    public void test1() {
-        List<City> allCity = cityMapper.findAllCity();
-    }
+    private UserRoleMapper userRoleMapper;
 
 
     @Test
     public void test2() {
-
+        List<Object> list = userRoleMapper.selectObjs(Wrappers.<UserRole>lambdaQuery().select(UserRole::getRoleId,UserRole::getUserId));
+        for (Object integer : list) {
+            System.out.println(integer);
+        }
     }
 
 

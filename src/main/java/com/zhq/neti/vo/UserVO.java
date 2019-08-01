@@ -28,7 +28,7 @@ public class UserVO {
     @NotNull(message = "必须选择匹配的角色")
     private Long roleId;
     @NotNull(message = "必须指定用户的状态")
-    @Range(min = 0, max = 2, message = "用户状态不合法")
+    @Range(max = 2, message = "用户状态不合法")
     private Integer status;
 
     public User adapt(){

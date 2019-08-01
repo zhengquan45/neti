@@ -20,7 +20,7 @@ public class Role {
     @TableId(type = IdType.ID_WORKER)
     private Long id;
     private String name;
-    private String desc;
+    private String remark;
     private Date createTime;
     @TableLogic
     private Boolean isDeleted;

@@ -24,7 +24,9 @@ public class Acl {
     private String level;
     private Integer code;
     private String name;
+    private String title;
     private String icon;
+    private String component;
     private String url;
     private AclTypeEnum type;
     private Integer status;

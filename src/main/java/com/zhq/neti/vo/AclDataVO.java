@@ -19,7 +19,7 @@ public class AclDataVO {
     @NotNull(message = "必须选择匹配的权限点")
     private Long aclId;
     @NotNull(message = "必须指定数据权限状态")
-    @Range(min = 0, max = 2, message = "数据权限状态不合法")
+    @Range(max = 2, message = "数据权限状态不合法")
     private Integer status;
     @NotBlank(message = "必须指定限制的参数")
     private String param;
