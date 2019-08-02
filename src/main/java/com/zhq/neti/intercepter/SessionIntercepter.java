@@ -63,11 +63,11 @@ public class SessionIntercepter implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object handler, ModelAndView modelAndView) throws Exception {
-        log.info("postHandle");
+        //log.info("postHandle");
     }
 
     @Override
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object handler, Exception e) throws Exception {
-        log.info("afterCompletion");
+        //log.info("afterCompletion");
     }
 }

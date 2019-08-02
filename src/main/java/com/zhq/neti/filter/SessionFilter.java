@@ -4,6 +4,7 @@ import com.zhq.neti.common.Const;
 import com.zhq.neti.common.RequestHolder;
 import com.zhq.neti.common.SessionCache;
 import com.zhq.neti.pojo.User;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +13,8 @@ import java.io.IOException;
 /**
  * @author zhengquan
  */
-public class SessionExpireFilter implements Filter {
+@Slf4j
+public class SessionFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
