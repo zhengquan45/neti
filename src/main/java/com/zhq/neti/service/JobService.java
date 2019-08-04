@@ -2,6 +2,7 @@ package com.zhq.neti.service;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.zhq.neti.common.BeanValidator;
 import com.zhq.neti.common.ServerResponse;
 import com.zhq.neti.mapper.JobMapper;
@@ -33,7 +34,7 @@ public class JobService {
 
     public ServerResponse delete(List<Long> ids) {
         if(CollUtil.isEmpty(ids)){
-            return ServerResponse.createByErrorMessage("请选择移除的部门");
+            return ServerResponse.createByErrorMessage("请选择移除的职务");
         }
         if(jobMapper.deleteBatchIds(ids)>0){
             return ServerResponse.createBySuccess();
@@ -43,7 +44,7 @@ public class JobService {
 
     public ServerResponse update(JobVO jobVO) {
         if(jobVO.getId()==null){
-            return ServerResponse.createByErrorMessage("请选择要修改的部门");
+            return ServerResponse.createByErrorMessage("请选择要修改的职务");
         }
         BeanValidator.check(jobVO);
         Job job = jobVO.adapt();
@@ -58,12 +59,20 @@ public class JobService {
         if(job!=null){
             return ServerResponse.createBySuccess(job);
         }
-        return ServerResponse.createByErrorMessage("未找到该部门");
+        return ServerResponse.createByErrorMessage("未找到该职务");
     }
 
     public ServerResponse findList(PageQuery pageQuery) {
         BeanValidator.check(pageQuery);
         IPage<Job> page = jobMapper.selectPage(pageQuery.adapt(), null);
         return  ServerResponse.createBySuccess(page);
+    }
+
+    public ServerResponse checkValid(String name) {
+        Integer resultCount = jobMapper.selectCount(Wrappers.<Job>lambdaQuery().eq(Job::getName, name));
+        if (resultCount > 0) {
+            return ServerResponse.createByErrorMessage("职务名称已被占用");
+        }
+        return ServerResponse.createBySuccess();
     }
 }

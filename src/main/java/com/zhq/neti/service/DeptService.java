@@ -1,11 +1,13 @@
 package com.zhq.neti.service;
 
 import cn.hutool.core.collection.CollUtil;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.zhq.neti.common.BeanValidator;
 import com.zhq.neti.common.ServerResponse;
 import com.zhq.neti.mapper.DeptMapper;
 import com.zhq.neti.pojo.Brand;
 import com.zhq.neti.pojo.Dept;
+import com.zhq.neti.pojo.Job;
 import com.zhq.neti.vo.DeptVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,5 +61,13 @@ public class DeptService {
     public ServerResponse findList() {
         List<Dept> list = deptMapper.selectList(null);
         return  ServerResponse.createBySuccess(list);
+    }
+
+    public ServerResponse checkValid(String name) {
+        Integer resultCount = deptMapper.selectCount(Wrappers.<Dept>lambdaQuery().eq(Dept::getName, name));
+        if (resultCount > 0) {
+            return ServerResponse.createByErrorMessage("部门名称已被占用");
+        }
+        return ServerResponse.createBySuccess();
     }
 }

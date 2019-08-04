@@ -1,24 +1,27 @@
 package com.zhq.neti;
 
-import com.zhq.neti.service.SessionService;
+import cn.hutool.core.util.CharsetUtil;
+import cn.hutool.http.HttpUtil;
+import cn.hutool.script.JavaScriptEngine;
+import cn.hutool.script.ScriptUtil;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
+import javax.script.ScriptException;
+
 @SpringBootTest
 public class NetiApplicationTests {
 
 
-    @Autowired
-    private SessionService sessionService;
-
 
     @Test
-    public void test2() {
-        sessionService.menu();
+    public void test2() throws ScriptException {
+        JavaScriptEngine scriptEngine = ScriptUtil.getJavaScriptEngine();
+        String url = "https://cdn.bootcss.com/Mock.js/1.0.1-beta3/mock-min.js";
+        String scriptString = HttpUtil.downloadString(url, CharsetUtil.UTF_8);
+        scriptEngine.eval(scriptString);
+        Object eval = scriptEngine.eval("Mock.Random.boolean()");
+        System.out.println(eval);
     }
 
 

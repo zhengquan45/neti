@@ -13,7 +13,7 @@ public class SwaggerPrintEvent {
 
     public void printAddress(){
         if(enable) {
-            log.info("swagger address : localhost:8080/doc.html");
+            log.info("swagger address : http://localhost:8080/doc.html");
         }
     }
 }

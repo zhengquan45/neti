@@ -1,6 +1,7 @@
 package com.zhq.neti.vo;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.zhq.neti.common.valid.anno.DeptUnique;
 import com.zhq.neti.pojo.Dept;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
@@ -14,6 +15,7 @@ public class DeptVO {
     private Long id;
     @NotBlank(message = "部门名称不可以为空")
     @Length(min=1,max = 100,message = "部门名称长度需要在1-100个字之内")
+    @DeptUnique
     private String name;
     @NotBlank(message = "部门缩写不可以为空")
     @Length(min=1,max =5,message = "部门缩写名称长度需要在1-5个字之内")

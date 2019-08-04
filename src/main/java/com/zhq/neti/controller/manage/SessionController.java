@@ -18,8 +18,8 @@ public class SessionController {
     @Autowired
     private SessionService sessionService;
 
-    @GetMapping
-    @ApiImplicitParam(name = "token", value = "token", required = false, dataType = "String",paramType="header")
+    @PostMapping
+    @ApiImplicitParam(name = "token", value = "token", dataType = "String",paramType="header")
     public ServerResponse login(String username, String password){
         return sessionService.login(username, password);
     }
