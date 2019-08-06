@@ -29,6 +29,7 @@ public class MockUtil {
     public static String []roles ="仓管员,超级管理员,管理员,活动运营,质量员,采购员".split(",");
     public static String []jobs ="董事长,总经理,部门经理,主管,店长,售货员,保管员,保安,实习生".split(",");
     public static String []depts ="董事会,总裁办,零售部,网商部,技术部,售后部".split(",");
+    public static String []telPrefix ="130,131,132,133,134,135,136,137,138,139,145,147,150,151,152,153,155,156,157,158,159,166,170,171,173,176,177,178,180,181,182,183,184,185,186,187,188,189,198,199".split(",");
     /**
      * 方法描述：调用mockJs生成模拟数据.
      * 创建时间：2019-06-14 14:59:00
@@ -218,6 +219,37 @@ public class MockUtil {
         String format = StrFormatter.format("Random.string('{}',{},{})", pool, min, max);
         Object random = mockRandom(format);
         return Convert.toStr(random);
+    }
+
+    /**
+     * 方法描述：返回一个整数。
+     * 创建时间：2019-06-14 17:34:27
+     * 创建作者：李兴武
+     *
+     * @param min 最小。
+     * @param max  最大。
+     * @author "lixingwu"
+     */
+    public static Integer integer(int min, int max) throws ScriptException {
+        String format = StrFormatter.format("Random.integer({},{})", min, max);
+        Object random = mockRandom(format);
+        return Convert.toInt(random);
+    }
+
+    /**
+     * 方法描述：返回一个手机号码。
+     * 创建时间：2019-06-14 17:34:27
+     * 创建作者：李兴武
+     *
+     */
+    public static String tel() {
+        StringBuilder sb = new StringBuilder();
+        int r = RandomUtil.randomInt(MockUtil.telPrefix.length - 1);
+        String telPrefix = MockUtil.telPrefix[r];
+        String telBody = RandomUtil.randomNumbers(8);
+        sb.append(telPrefix);
+        sb.append(telBody);
+        return sb.toString();
     }
 
     /**
