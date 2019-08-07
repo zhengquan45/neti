@@ -9,12 +9,12 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 @Component
-public class EnumConverterFactory implements ConverterFactory<Integer, CodeEnum> {
+public class EnumConverterFactory implements ConverterFactory<String, CodeEnum> {
 
     private static final Map<Class, Converter> converterMap = MapUtil.newHashMap();
 
     @Override
-    public <T extends CodeEnum> Converter<Integer, T> getConverter(Class<T> targetType) {
+    public <T extends CodeEnum> Converter<String, T> getConverter(Class<T> targetType) {
         Converter converter = converterMap.get(targetType);
         if(converter==null){
             converter = new EnumConverter(targetType);
@@ -23,7 +23,7 @@ public class EnumConverterFactory implements ConverterFactory<Integer, CodeEnum>
         return converter;
     }
 
-    class EnumConverter <T extends CodeEnum> implements Converter<Integer,T>{
+    class EnumConverter <T extends CodeEnum> implements Converter<String,T>{
 
         private Map<Integer,T>enumMap = MapUtil.newHashMap();
 
@@ -35,8 +35,8 @@ public class EnumConverterFactory implements ConverterFactory<Integer, CodeEnum>
         }
 
         @Override
-        public T convert(Integer code) {
-            T t = enumMap.get(code);
+        public T convert(String code) {
+            T t = enumMap.get(Integer.parseInt(code));
             if(t==null){
                 throw new IllegalArgumentException("枚举类转换错误");
             }

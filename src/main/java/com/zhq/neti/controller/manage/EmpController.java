@@ -3,6 +3,7 @@ package com.zhq.neti.controller.manage;
 import com.zhq.neti.common.ServerResponse;
 import com.zhq.neti.service.EmpService;
 import com.zhq.neti.vo.EmpVO;
+import com.zhq.neti.vo.PageQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,4 +39,8 @@ public class EmpController {
         return empService.find(id);
     }
 
+    @GetMapping("/list")
+    public ServerResponse findListByCondition(String name,String tel,PageQuery pageQuery){
+        return empService.findListByCondition(name,tel,pageQuery);
+    }
 }

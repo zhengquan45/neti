@@ -1,6 +1,7 @@
 package com.zhq.neti.service;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -69,5 +70,10 @@ public class EmpService {
     }
 
 
-
+    public ServerResponse findListByCondition(String name, String tel, PageQuery pageQuery) {
+        BeanValidator.check(pageQuery);
+        Wrapper<Emp> wrapper = Wrappers.<Emp>lambdaQuery().like(StrUtil.isNotBlank(name),Emp::getName, name).like(StrUtil.isNotBlank(tel),Emp::getTel, tel);
+        IPage<Emp> page = empMapper.selectPage(pageQuery.adapt(), wrapper);
+        return ServerResponse.createBySuccess(page);
+    }
 }

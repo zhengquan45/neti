@@ -68,7 +68,7 @@ public class SpuService {
 
     public ServerResponse findListByCondition(String title, Long brandId, PageQuery pageQuery) {
         BeanValidator.check(pageQuery);
-        Wrapper<Spu> wrapper = Wrappers.<Spu>lambdaQuery().like(StrUtil.isNotEmpty(title),Spu::getTitle, title).eq(brandId!=null,Spu::getBrandId, brandId);
+        Wrapper<Spu> wrapper = Wrappers.<Spu>lambdaQuery().like(StrUtil.isNotBlank(title),Spu::getTitle, title).eq(brandId!=null,Spu::getBrandId, brandId);
         IPage<Spu> page = spuMapper.selectPage(pageQuery.adapt(), wrapper);
         return ServerResponse.createBySuccess(page);
     }

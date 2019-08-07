@@ -1,6 +1,8 @@
 package com.zhq.neti.service;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.CharUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -67,7 +69,7 @@ public class BrandService {
 
     public ServerResponse findListByCondition(String name, Character letter, PageQuery pageQuery) {
         BeanValidator.check(pageQuery);
-        Wrapper<Brand> wrapper = Wrappers.<Brand>lambdaQuery().like(Brand::getName, name).eq(Brand::getLetter, letter);
+        Wrapper<Brand> wrapper = Wrappers.<Brand>lambdaQuery().like(StrUtil.isNotBlank(name),Brand::getName, name).eq(!CharUtil.isBlankChar(letter),Brand::getLetter, letter);
         IPage<Brand> page = brandMapper.selectPage(pageQuery.adapt(), wrapper);
         return ServerResponse.createBySuccess(page);
     }

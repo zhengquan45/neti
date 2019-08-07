@@ -1,6 +1,7 @@
 package com.zhq.neti.service;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -67,7 +68,7 @@ public class CategoryService {
 
     public ServerResponse findListByCondition(String name, PageQuery pageQuery) {
         BeanValidator.check(pageQuery);
-        Wrapper<Category> wrapper = Wrappers.<Category>lambdaQuery().like(Category::getName, name);
+        Wrapper<Category> wrapper = Wrappers.<Category>lambdaQuery().like(StrUtil.isNotBlank(name),Category::getName, name);
         IPage<Category> page = categoryMapper.selectPage(pageQuery.adapt(), wrapper);
         return ServerResponse.createBySuccess(page);
 
