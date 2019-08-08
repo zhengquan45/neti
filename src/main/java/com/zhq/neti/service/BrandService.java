@@ -67,9 +67,9 @@ public class BrandService {
         return ServerResponse.createByErrorMessage("未找到该品牌");
     }
 
-    public ServerResponse findListByCondition(String name, Character letter, PageQuery pageQuery) {
+    public ServerResponse findListByCondition(String name, String letter, PageQuery pageQuery) {
         BeanValidator.check(pageQuery);
-        Wrapper<Brand> wrapper = Wrappers.<Brand>lambdaQuery().like(StrUtil.isNotBlank(name),Brand::getName, name).eq(!CharUtil.isBlankChar(letter),Brand::getLetter, letter);
+        Wrapper<Brand> wrapper = Wrappers.<Brand>lambdaQuery().like(StrUtil.isNotBlank(name),Brand::getName, name).eq(StrUtil.isNotBlank(letter),Brand::getLetter, letter);
         IPage<Brand> page = brandMapper.selectPage(pageQuery.adapt(), wrapper);
         return ServerResponse.createBySuccess(page);
     }

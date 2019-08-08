@@ -25,7 +25,7 @@ public class Brand {
     private Long id;
     private String name;
     private String images;
-    private Character letter;
+    private String letter;
     @TableLogic
     private Boolean isDeleted;
 }

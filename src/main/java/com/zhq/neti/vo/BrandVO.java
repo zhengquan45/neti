@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 /**
  * @author zhengquan
@@ -20,9 +21,10 @@ public class BrandVO {
     @Length(min=1,max = 100,message = "品牌名称长度需要在1-100个字之内")
     @BrandUnique
     private String name;
-    private String image;
+    private String images;
     @NotNull(message = "品牌首字母不可以为空")
-    private Character letter;
+    @Pattern(regexp = "^[A-Z]$",message = "品牌首字母必须大写")
+    private String letter;
 
     public Brand adapt(){
         Brand brand = new Brand();

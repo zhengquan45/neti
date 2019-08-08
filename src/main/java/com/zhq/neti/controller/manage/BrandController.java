@@ -41,7 +41,7 @@ public class BrandController {
     }
 
     @GetMapping("/list")
-    public ServerResponse findListByCondition(String name, Character letter, PageQuery pageQuery){
+    public ServerResponse findListByCondition(String name, String letter, PageQuery pageQuery){
         return brandService.findListByCondition(name,letter,pageQuery);
     }
 }
