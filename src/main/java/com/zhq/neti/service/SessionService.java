@@ -140,4 +140,9 @@ public class SessionService {
             }
         }
     }
+
+    public ServerResponse getUserInfo() {
+        User currentUser = RequestHolder.getCurrentUser();
+        return ServerResponse.createBySuccess(currentUser);
+    }
 }

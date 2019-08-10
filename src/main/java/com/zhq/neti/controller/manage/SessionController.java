@@ -31,6 +31,11 @@ public class SessionController {
         return ServerResponse.createBySuccess();
     }
 
+    @GetMapping("/user")
+    public ServerResponse getUserInfo(){
+        return sessionService.getUserInfo();
+    }
+
     @GetMapping("/menu")
     public ServerResponse menu(){
         return sessionService.menu();
