@@ -44,64 +44,49 @@ public class UserControllerTest extends BaseLoginTest{
     }
     @Test
     public void A_save() throws Exception {
-        String result = mockMvc.perform(post("/manage/user")
+        mockMvc.perform(post("/manage/user")
                 .header(Const.TOKEN,token)
                 .param("username", MockUtil.word())
                 .param("password","123456")
                 .param("empId",MockUtil.pick(empIdList))
                 .param("roleId",MockUtil.pick(roleIdList))
                 .param("status","1")
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk())
-                .andReturn().getResponse().getContentAsString();
-        log.info("result:{}",result);
+                .contentType(MediaType.APPLICATION_JSON_UTF8));
     }
 
     @Test
     public void B_findListByCondition() throws Exception {
-        String result = mockMvc.perform(get("/manage/user/list")
+        mockMvc.perform(get("/manage/user/list")
                 .header(Const.TOKEN,token)
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk())
-                .andReturn().getResponse().getContentAsString();
-        log.info("result:{}",result);
+                .contentType(MediaType.APPLICATION_JSON_UTF8));
     }
 
     @Test
     public void C_find() throws Exception {
-        String result = mockMvc.perform(get("/manage/user")
+         mockMvc.perform(get("/manage/user")
                 .param("id","1158944991863668737")
                 .header(Const.TOKEN,token)
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk())
-                .andReturn().getResponse().getContentAsString();
-        log.info("result:{}",result);
+                .contentType(MediaType.APPLICATION_JSON_UTF8));
 
     }
 
     @Test
     public void D_update()throws Exception  {
-        String result = mockMvc.perform(put("/manage/user")
+       mockMvc.perform(put("/manage/user")
                 .param("id","1158944991863668737")
                 .param("roleId",MockUtil.pick(roleIdList))
                 .header(Const.TOKEN,token)
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk())
-                .andReturn().getResponse().getContentAsString();
-        log.info("result:{}",result);
+                .contentType(MediaType.APPLICATION_JSON_UTF8));
     }
 
 
 
     @Test
     public void E_delete() throws Exception {
-        String result = mockMvc.perform(delete("/manage/user")
+        mockMvc.perform(delete("/manage/user")
                 .param("ids","1158944991863668737")
                 .header(Const.TOKEN,token)
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk())
-                .andReturn().getResponse().getContentAsString();
-        log.info("result:{}",result);
+                .contentType(MediaType.APPLICATION_JSON_UTF8));
     }
 
 

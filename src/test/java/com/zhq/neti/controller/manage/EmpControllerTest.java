@@ -20,13 +20,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * @author zhengquan
  * @date 2019/8/4
  */
-@Slf4j
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class EmpControllerTest extends BaseLoginTest {
 
@@ -46,7 +44,7 @@ public class EmpControllerTest extends BaseLoginTest {
 
     @Test
     public void A_save() throws Exception {
-        String result = mockMvc.perform(post("/manage/emp")
+        mockMvc.perform(post("/manage/emp")
                 .param("name", MockUtil.cname())
                 .param("code", RandomUtil.randomNumbers(8))
                 .param("sex",MockUtil.integer(1,2).toString())
@@ -60,38 +58,29 @@ public class EmpControllerTest extends BaseLoginTest {
                 .param("hiredate",MockUtil.date("yyyy-MM-dd"))
                 .param("status","1")
                 .header(Const.TOKEN,token)
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk())
-                .andReturn().getResponse().getContentAsString();
-        log.info("result:{}",result);
+                .contentType(MediaType.APPLICATION_JSON_UTF8));
     }
 
     @Test
     public void B_findListByCondition() throws Exception {
-        String result = mockMvc.perform(get("/manage/emp/list")
+        mockMvc.perform(get("/manage/emp/list")
                 .header(Const.TOKEN,token)
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk())
-                .andReturn().getResponse().getContentAsString();
-        log.info("result:{}",result);
+                .contentType(MediaType.APPLICATION_JSON_UTF8));
     }
 
     @Test
     public void C_find() throws Exception {
-        String result = mockMvc.perform(get("/manage/emp")
+         mockMvc.perform(get("/manage/emp")
                 .param("id","1158933145043668994")
                 .header(Const.TOKEN,token)
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk())
-                .andReturn().getResponse().getContentAsString();
-        log.info("result:{}",result);
+                .contentType(MediaType.APPLICATION_JSON_UTF8));
     }
 
 
 
     @Test
     public void D_update() throws Exception {
-        String result = mockMvc.perform(put("/manage/emp")
+        mockMvc.perform(put("/manage/emp")
                 .param("id","1158933145043668994")
                 .param("name", MockUtil.cname())
                 .param("code", RandomUtil.randomNumbers(8))
@@ -106,21 +95,15 @@ public class EmpControllerTest extends BaseLoginTest {
                 .param("hiredate",MockUtil.date("yyyy-MM-dd"))
                 .param("status","1")
                 .header(Const.TOKEN,token)
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk())
-                .andReturn().getResponse().getContentAsString();
-        log.info("result:{}",result);
+                .contentType(MediaType.APPLICATION_JSON_UTF8));
     }
 
     @Test
     public void E_delete() throws Exception {
-        String result = mockMvc.perform(delete("/manage/emp")
+        mockMvc.perform(delete("/manage/emp")
                 .param("ids","1158933145043668994")
                 .header(Const.TOKEN,token)
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk())
-                .andReturn().getResponse().getContentAsString();
-        log.info("result:{}",result);
+                .contentType(MediaType.APPLICATION_JSON_UTF8));
 
     }
 

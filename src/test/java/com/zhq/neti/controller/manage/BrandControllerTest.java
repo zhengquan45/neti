@@ -2,16 +2,13 @@ package com.zhq.neti.controller.manage;
 
 import com.zhq.neti.common.Const;
 import com.zhq.neti.util.MockUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.springframework.http.MediaType;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Slf4j
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class BrandControllerTest extends BaseLoginTest{
 
@@ -42,27 +39,21 @@ public class BrandControllerTest extends BaseLoginTest{
 
     @Test
     public void D_update()  throws Exception {
-        String result = mockMvc.perform(put("/manage/brand")
+        mockMvc.perform(put("/manage/brand")
                 .param("id","1159277282376814593")
                 .param("name", MockUtil.pick(MockUtil.brands))
                 .param("letter",MockUtil.character("upper").toString())
                 .header(Const.TOKEN,token)
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk())
-                .andReturn().getResponse().getContentAsString();
-        log.info("result:{}",result);
+                .contentType(MediaType.APPLICATION_JSON_UTF8));
     }
 
 
     @Test
     public void E_delete()  throws Exception {
-        String result = mockMvc.perform(delete("/manage/brand")
+        mockMvc.perform(delete("/manage/brand")
                 .param("ids","1159277282376814593")
                 .header(Const.TOKEN,token)
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk())
-                .andReturn().getResponse().getContentAsString();
-        log.info("result:{}",result);
+                .contentType(MediaType.APPLICATION_JSON_UTF8));
     }
 
 }
