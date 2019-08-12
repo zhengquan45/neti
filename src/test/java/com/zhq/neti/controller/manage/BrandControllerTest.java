@@ -17,36 +17,27 @@ public class BrandControllerTest extends BaseLoginTest{
 
     @Test
     public void A_save() throws Exception {
-        String result = mockMvc.perform(post("/manage/brand")
+        mockMvc.perform(post("/manage/brand")
                 .header(Const.TOKEN,token)
                 .param("name", MockUtil.pick(MockUtil.brands))
                 .param("images",MockUtil.image("300x250"))
                 .param("letter",MockUtil.character("upper").toString())
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk())
-                .andReturn().getResponse().getContentAsString();
-        log.info("result:{}",result);
+                .contentType(MediaType.APPLICATION_JSON_UTF8));
     }
 
     @Test
     public void B_findListByCondition() throws Exception  {
-        String result = mockMvc.perform(get("/manage/brand/list")
+        mockMvc.perform(get("/manage/brand/list")
                 .header(Const.TOKEN,token)
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk())
-                .andReturn().getResponse().getContentAsString();
-        log.info("result:{}",result);
+                .contentType(MediaType.APPLICATION_JSON_UTF8));
     }
 
     @Test
     public void C_find()  throws Exception {
-        String result = mockMvc.perform(get("/manage/brand")
+        mockMvc.perform(get("/manage/brand")
                 .param("id","1159277282376814593")
                 .header(Const.TOKEN,token)
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk())
-                .andReturn().getResponse().getContentAsString();
-        log.info("result:{}",result);
+                .contentType(MediaType.APPLICATION_JSON_UTF8));
     }
 
     @Test

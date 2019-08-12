@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.springframework.http.MediaType;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * @author zhengquan
@@ -29,7 +28,6 @@ public class BaseLoginTest extends BaseTest{
         JSONObject jsonObject = JSONUtil.parseObj(result);
         JSONObject data = JSONUtil.parseObj(jsonObject.get("data").toString());
         String token = data.get("token").toString();
-        log.info("login result:{}",result);
         log.info("token:{}",token);
         return token;
     }
@@ -39,7 +37,6 @@ public class BaseLoginTest extends BaseTest{
                 .param("username","zhengquan")
                 .param("password","123456")
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         return result;
     }
