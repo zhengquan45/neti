@@ -6,8 +6,6 @@ import com.zhq.neti.vo.AclVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 /**
  * @author zhengquan
  */
@@ -36,6 +34,11 @@ public class AclController {
     @GetMapping
     public ServerResponse find(@RequestParam Long id){
         return aclService.find(id);
+    }
+
+    @GetMapping
+    public ServerResponse findList(){
+        return aclService.findList();
     }
 
 }

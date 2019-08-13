@@ -1,18 +1,13 @@
 package com.zhq.neti.service;
 
 import cn.hutool.core.collection.CollUtil;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.zhq.neti.common.BeanValidator;
 import com.zhq.neti.common.ServerResponse;
 import com.zhq.neti.mapper.AclMapper;
 import com.zhq.neti.pojo.Acl;
-import com.zhq.neti.pojo.Brand;
 import com.zhq.neti.util.LevelUtil;
 import com.zhq.neti.vo.AclVO;
-import com.zhq.neti.vo.BrandVO;
-import com.zhq.neti.vo.PageQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -111,4 +106,7 @@ public class AclService {
     }
 
 
+    public ServerResponse findList() {
+        return ServerResponse.createBySuccess(aclMapper.selectList(null));
+    }
 }
