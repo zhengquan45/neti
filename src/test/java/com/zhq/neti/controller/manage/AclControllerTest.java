@@ -20,37 +20,20 @@ public class AclControllerTest extends BaseLoginTest {
         mockMvc.perform(post("/manage/acl")
                 .header(Const.TOKEN,token)
                 .param("code", "1")
-                .param("parentId","0")
-                .param("name","aclModule")
-                .param("title","权限")
+                .param("parentId","1161459876992430081")
+                .param("name","aclManage")
+                .param("title","权限管理")
                 .param("icon","")
-                .param("component","Layout")
-                .param("url","/aclModule")
-                .param("type","1")
+                .param("component","acl")
+                .param("url","acl")
+                .param("type","2")
                 .param("status","1")
                 .param("hidden","false")
                 .param("sort","1")
-                .param("remark","权限模块")
+                .param("remark","权限管理")
                 .contentType(MediaType.APPLICATION_JSON_UTF8));
     }
 
-    @Test
-    public void B_findList() {
-
-    }
-
-    @Test
-    public void C_find() {
-
-    }
-
-    @Test
-    public void D_update() {
-    }
-
-    @Test
-    public void E_delete() {
-    }
 
 
 

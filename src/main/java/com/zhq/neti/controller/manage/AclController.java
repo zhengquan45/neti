@@ -36,7 +36,7 @@ public class AclController {
         return aclService.find(id);
     }
 
-    @GetMapping
+    @GetMapping("/list")
     public ServerResponse findList(){
         return aclService.findList();
     }
